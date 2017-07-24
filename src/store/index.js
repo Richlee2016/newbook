@@ -6,11 +6,14 @@ import actions from './actions'
 Vue.use(Vuex)
 
 let state = {
-
+    //阅读器
+    book: {},
+    read: [],
+    chapter: []
 }
 
-export default {
+export default new Vuex.Store({
     state,
     actions,
     mutations
-}
+});

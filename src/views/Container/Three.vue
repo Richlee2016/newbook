@@ -1,7 +1,7 @@
 <template>
     <div class="container-three">
         <v-head :title="'精选书单'"></v-head>
-        <section v-for="(item,index) in container.items" :key="index">
+        <section v-for="(item,index) in list" :key="index">
             <v-blockfive :prop="item"></v-blockfive>
         </section>
         <!--下拉加载  -->
@@ -22,48 +22,27 @@ export default {
         "v-head": bookHead,
         //书块one
         "v-blockfive": boxBlockFive,
+        InfiniteLoading,
     },
     data() {
         return {
             container: {},
+            list:[]
         }
     },
     computed: {
 
     },
     methods: {
-        async inLoading() {
-            // if (this.isLoad) {
-            //     this.isLoad = false;
-            //     let res;
-            //     try {
-            //         res = await persistent(this.start, this.count, 4);
-            //     } catch (error) {
-            //         console.log(error);
-            //     }
-            //     if (Object.keys(this.container).length === 0) {
-            //         this.container = res.data;
-            //     } else {
-            //         this.container.items = this.container.items.concat(res.data.items);
-            //     };
-            //     this.start += this.count;
-            //     if (res.data.items.length === this.count) {
-            //         this.isLoad = true;
-            //     } else {
-            //         this.overLoad = false;
-            //         this.isLoad = false;
-            //     };
-            //     this.$overLoad();
-            // };
-        },
         onInfinite() {
             let count = 4;
-            let start = this.container.items.length;
+            console.log(this.list);
+            let start = this.list.length;
             start = start === 0 ? 0 : start + count;
             persistent(start, count, 4)
                 .then(res => {
-                    this.container.items = this.container.items.concat(res.data.items);
-                    if (res.data.count === 0) {
+                    this.list = this.list.concat(res.data.items);
+                    if (res.data.items<=0) {
                         this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
                     } else {
                         this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
@@ -72,17 +51,6 @@ export default {
         }
     },
     mounted() {
-        // persistent(this.$route.query.start,this.$route.query.count,this.$route.query.type)
-        // .then( res => {
-        // 	this.container = res.data;
-        // 	return Promise.resolve();
-        // })
-        // .then(() => {
-        // 	this.$overLoad();
-        // })
-        // .catch( err => {
-        // 	console.log(err)
-        // })		
     }
 }
 </script>

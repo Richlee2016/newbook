@@ -101,6 +101,7 @@ export default {
     _banner(data) {
       let res = defaultsDeep({}, data);
       this.bannerData = setGroup(res.data.data, 3, 5);
+      // console.log(this.bannerData);
     },
     _weekHot(data) {
       let res = defaultsDeep({}, data);

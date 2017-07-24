@@ -20,6 +20,10 @@ const RanksFiction = r => require.ensure([], () => r(require('@/views/Ranks/chil
 const ContainerOne = r => require.ensure([], () => r(require('@/views/Container/One')), 'containerOne');
 const ContainerThree = r => require.ensure([], () => r(require('@/views/Container/Three')), 'containerThree');
 const ContainerFour = r => require.ensure([], () => r(require('@/views/Container/Four')), 'containerFour');
+const BookIndex = r => require.ensure([], () => r(require('@/views/Book/Index')), 'bookIndex');
+const Detail = r => require.ensure([], () => r(require('@/views/Book/children/Detail')), 'detail');
+const Book = r => require.ensure([], () => r(require('@/views/Book/children/Book')), 'book');
+const Chapter = r => require.ensure([], () => r(require('@/views/Book/children/Chapter')), 'chapter');
 export default new Router({
     routes: [{
             path: '/',
@@ -81,5 +85,23 @@ export default new Router({
             name: 'ContainerFour',
             component: ContainerFour
         }, //'更多' 页面4
+        {
+            path: '/detail/:id',
+            name: 'BookIndex',
+            component: BookIndex,
+            children: [{
+                path: '',
+                name: 'Detail',
+                component: Detail,
+            }, {
+                path: 'book',
+                name: 'Book',
+                component: Book,
+            }, {
+                path: 'chapter',
+                name: 'Chapter',
+                component: Chapter,
+            }, ]
+        }, //阅读器
     ]
 })

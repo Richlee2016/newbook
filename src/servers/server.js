@@ -14,8 +14,9 @@ const categoryTag = (name, start, count, type = 'click') => rxios('GET', `/store
 const ranks = () => rxios('GET', '/store/v0/ad/ranks');
 const ranksFiction = (start, count, r) => rxios('GET', '/store/v0/fiction/rank', { start, count, r });
 const morefiction = (id, start, count) => rxios('GET', '/store/v0/fiction/list/' + id, { start, count });
-//精选
-const persistent = (start, count, type) => getAxios('GET', '/store/v0/ad/persistent', { start, count, type });
+const persistent = (start, count, type) => rxios('GET', '/store/v0/ad/persistent', { start, count, type });
+const detail = (id) => rxios('GET', '/hs/v0/android/fiction/book/' + id);
+const read = (id, chapter) => rxios('POST', '/book/read', { id, chapter });
 export {
     index, // 首页
     pull, //首页瀑布流请求
@@ -32,4 +33,6 @@ export {
     ranksFiction, //排行内页
     morefiction, //频道内页更多信息（containerOne）
     persistent, //精选（containerThree）
+    detail, //详情
+    read, //看书
 }

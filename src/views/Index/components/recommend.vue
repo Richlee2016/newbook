@@ -33,7 +33,6 @@
 </template>
 
 <script>
-import {mapMutations} from "vuex"
 import {change} from '@/assets/mixins'
 import bookTitle from '@/components/common/bookTitle'
 import bookMore from '@/components/common/bookMore'
