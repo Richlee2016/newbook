@@ -2,9 +2,11 @@
   <div class="book" @touchmove="navHide" :class="bodyBd">
     <div class="book-top" v-show="navOnOff">
       <section>
-        <div class="back" @click="$router.goback()">
-          <span class="icon-rback"></span>
-          <label>返回书架</label>
+        <div class="back">
+          <router-link :to="`/detail/${$route.params.id}`">
+            <span class="icon-rback"></span>
+            <label>返回书架</label>
+          </router-link>
         </div>
       </section>
     </div>
@@ -68,6 +70,7 @@
 </template>
 
 <script>
+
 import { read } from '@/servers/server'
 import { mapActions, mapState } from 'vuex'
 import InfiniteLoading from 'vue-infinite-loading';
@@ -85,7 +88,9 @@ export default {
       fontBorderIndex: 1,
       fontSize: 16,
       bookcontainer: {},
-      isfree: true
+      isfree: true,
+      //是否下拉更新章节
+      firstChapter: Number(this.$route.query.chapter)
     }
   },
   computed: {
@@ -93,7 +98,7 @@ export default {
       'read'
     ]),
     readList() {
-      return this.read.text.map(o => JSON.parse(o.txt));
+      return this.read.map(o => JSON.parse(o.txt));
     },
     borderOnOff() {
       let onOff = [];
@@ -112,10 +117,6 @@ export default {
       if (this.fontSize < 12) {
         this.fontSize = 12;
       };
-    },
-    "$route"(to, from) {
-      // console.log(to, from);
-      // console.log(this.read);
     }
   },
   methods: {
@@ -125,12 +126,47 @@ export default {
     // 下拉加载
     onInfinite() {
       const self = this;
-      let chapter = this.read.chapter + this.read.text.length;
+      // 读取阅读记录
+      const readHistory = sessionArr('get', 'readChapter');
+      const isRead = readHistory.find(o => o.id === this.$route.params.id);
+      let chapter = isRead ? isRead.chapter : 0;
       this.bookRead({
-        id: this.$route.params.id, chapter: chapter, fn() {
+        id: this.$route.params.id,
+        chapter: chapter,
+        // 回调
+        fn() {
           self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+          if (isRead) {
+            const read = readHistory.map(o => {
+              if (o.id === self.$route.params.id) {
+                o.chapter = ++chapter;
+              };
+              return o;
+            });
+            console.log(read);
+            sessionArr('set', 'readChapter', read);
+          } else {
+            readHistory.push({ id: self.$route.params.id, chapter });
+            if (readHistory.length > 5) {
+              read.length = 5;
+            };
+            console.log(readHistory);
+            sessionArr('set', 'readChapter', readHistory);
+          };
         }
       });
+    },
+    // 是否历史阅读
+    isRead(id) {
+      let chapter;
+      const readChapter = sessionArr('get', 'readChapter');
+      console.log(readChapter);
+      readChapter.forEach(o => {
+        if (o.id === id) {
+          chapter = o.chapter;
+        };
+      });
+      return chapter;
     },
     navHide() {
       if (this.navOnOff) {
@@ -164,25 +200,7 @@ export default {
           this.dayNight = true;
           break;
       }
-    },
-    _getRead() {
-      read(this.$route.params.id, 0)
-        .then(res => {
-          this.bookcontainer = JSON.parse(res.data.txt);
-          if (!res.data.txt) {
-            this.isfree = false;
-          };
-        })
     }
-  },
-  mounted() {
-    this.onInfinite();
-
-    // window.addEventListener("popstate", e =>{
-    //   console.log(0);
-    //   // this.$router.push({path:`/detail/${this.$route.params.id}`})
-    // }, false);
-
   }
 }
 </script>

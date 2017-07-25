@@ -8,8 +8,12 @@ Vue.use(Vuex)
 let state = {
     //阅读器
     book: {},
-    read: [],
-    chapter: []
+    read: {
+        id: 0,
+        chapter: 0,
+        text: []
+    },
+    historyRead: []
 }
 
 export default new Vuex.Store({

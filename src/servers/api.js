@@ -15,7 +15,7 @@ exports.read = function(req, res) {
     }
     request(options)
         .then(body => {
-            request(body.url)
+            return request(body.url)
                 .then(text => {
                     var reg = /\'(.*)\'/g;
                     var txt = reg.exec(text);

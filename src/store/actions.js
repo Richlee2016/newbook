@@ -8,7 +8,7 @@ export default {
     async bookRead({ commit }, { id, chapter, fn }) {
         const { data } = await read(id, chapter);
         if (data) {
-            commit(types.BOOK_READ, { chapter: data });
+            commit(types.BOOK_READ, { id, chapter, text: data });
             fn();
         };
     }

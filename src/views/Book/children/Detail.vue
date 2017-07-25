@@ -16,7 +16,7 @@
                 </div>
                 <div class="detail-btn">
                     <div class="start-read">
-                        <router-link :to="{path:`/detail/${$route.params.id}/book?chapter=0`}">开始阅读</router-link>
+                       <a @click="startRead">开始阅读</a>
                     </div>
                     <div class="download">
                         <span>下载</span>
@@ -96,7 +96,8 @@ export default {
     },
     methods: {
         ...mapActions({
-            getData:'bookDetail'
+            getData:'bookDetail',
+            bookRead:'bookRead'
         }),
         categoryLink(data) {
             if (data.category_id >= 1000000) {
@@ -104,6 +105,11 @@ export default {
             } else {
                 this.$router.push({ path: '/categoryfiction/' + encodeURI(data.label) });
             };
+        },
+        startRead(){
+            this.bookRead({id:this.$route.params.id,chapter:0,fn:()=>{
+                this.$router.push({path:`/detail/${this.$route.params.id}/book`});
+            }});
         }
     },
     watch: {

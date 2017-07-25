@@ -30,3 +30,12 @@ export const setGroup = function() {
 
 //解析more 标题类容正则
 export const chineseReg = /([\u4e00-\u9fa5]+)/g;
+
+//session 读取 数组
+export const sessionArr = (type, str, arr) => {
+    if (type === 'get') {
+        return JSON.parse(localStorage.getItem(str));
+    } else if (type === 'set') {
+        localStorage.setItem(str, JSON.stringify(arr))
+    };
+}
