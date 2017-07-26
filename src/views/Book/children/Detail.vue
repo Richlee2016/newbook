@@ -16,7 +16,7 @@
                 </div>
                 <div class="detail-btn">
                     <div class="start-read">
-                       <a @click="startRead">开始阅读</a>
+                       <a @click="startRead">{{isRead === false?`开始阅读`:`继续阅读第${isRead+1}章`}}</a>
                     </div>
                     <div class="download">
                         <span>下载</span>
@@ -75,9 +75,17 @@ export default {
         "v-detailtitle": detailTitle
     },
     computed: {
+        // state分发
         ...mapState({
-            detail:'book'
+            detail:'book',
+            historyRead:'historyRead'
         }),
+        // 是否历史阅读
+        isRead(){
+            const read = this.historyRead.find(o => o.id === this.$route.params.id);
+            return read?read.chapter : false;
+        },
+        // 详情数据
         container() {
             var res = this.detail, item
             if (res.item) {
@@ -95,10 +103,14 @@ export default {
         }
     },
     methods: {
+        // actions 分发
         ...mapActions({
+            // 获取数据
             getData:'bookDetail',
+            // 文章加载
             bookRead:'bookRead'
         }),
+        // 类别跳转
         categoryLink(data) {
             if (data.category_id >= 1000000) {
                 this.$router.push({ path: '/categoryfiction/' + data.category_id });
@@ -106,17 +118,20 @@ export default {
                 this.$router.push({ path: '/categoryfiction/' + encodeURI(data.label) });
             };
         },
+        // 开始阅读
         startRead(){
-            this.bookRead({id:this.$route.params.id,chapter:0,fn:()=>{
+            this.bookRead({id:this.$route.params.id,chapter:-1,fn:()=>{
                 this.$router.push({path:`/detail/${this.$route.params.id}/book`});
             }});
         }
     },
+    // 监听路由变化
     watch: {
         "$route"(to, from) {
             this.getData({id:this.$route.params.id});
         }
     },
+    // 初始化数据
     mounted() {
         this.getData({id:this.$route.params.id});
     }

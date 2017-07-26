@@ -4,7 +4,7 @@
 	  		<span class="icon-search"></span>
 	  	</div>
 		<label v-if="searchBox">输入书名/作者/关键字</label>
-		<input v-else v-model="keywords" type="" name="" id="" value="" placeholder="输入书名/作者/关键字" />
+		<input v-else v-model="keywords" @keydown.enter="searchGo" placeholder="输入书名/作者/关键字" />
 		<span v-if="goShow" class="search-go" @click="searchGo">搜索</span>  
   	</div>
 </template>

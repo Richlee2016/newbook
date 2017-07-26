@@ -50,7 +50,7 @@ export default {
 	},
 	computed:{
 		newid (){
-			return this.prop.fiction_id || this.prop.sid;
+			return this.prop.fiction_id || this.prop.sid ||this.prop.source_id;
 		}
 	}
 }

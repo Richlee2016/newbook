@@ -85,7 +85,7 @@ export default {
       fontBorderIndex: 1,
       fontSize: 16,
       bookcontainer: {},
-      isfree: true
+      isfree: true,
     }
   },
   computed: {
@@ -176,12 +176,6 @@ export default {
     }
   },
   mounted() {
-    this.onInfinite();
-
-    // window.addEventListener("popstate", e =>{
-    //   console.log(0);
-    //   // this.$router.push({path:`/detail/${this.$route.params.id}`})
-    // }, false);
 
   }
 }

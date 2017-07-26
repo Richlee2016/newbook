@@ -20,7 +20,6 @@
 		</div>
 		<ul class="search-result">
 			<li v-for="(item,index) in searchData" :key="index">
-			<router-link :to="{path:'/detail/'+ item.source_id}">	
 				<v-blockone
 				:prop="item"
 				>
@@ -31,7 +30,6 @@
 					</div>
 				</slot>
 				</v-blockone>
-			</router-link>
 			</li>
 		</ul>	  
   </div>
@@ -71,14 +69,14 @@ export default {
 		searchpage()
 		.then( res => {
 			this.searchChoice = res.data.msg.ads;
-			return Promise.resolve();
+			// return Promise.resolve();
 		})
-		.then(() => {
-			this.$overLoad();
-		})
-		.catch( err => {
-			console.log(err)
-		})
+		// .then(() => {
+		// 	this.$overLoad();
+		// })
+		// .catch( err => {
+		// 	console.log(err)
+		// })
 	}
 }
 </script>
