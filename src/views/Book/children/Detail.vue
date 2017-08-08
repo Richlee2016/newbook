@@ -16,7 +16,7 @@
                 </div>
                 <div class="detail-btn">
                     <div class="start-read">
-                       <a @click="startRead">{{isRead === false?`开始阅读`:`继续阅读第${isRead+1}章`}}</a>
+                       <a @click="startRead">{{isRead === 0?`开始阅读`:`继续阅读第${isRead}章`}}</a>
                     </div>
                     <div class="download">
                         <span>下载</span>
@@ -24,7 +24,7 @@
                 </div>
                 <p class="detail-box">{{container.item.content}}</p>
                 <p class="detail-book-title">
-                    <router-link :to="{path:'/chapter/' + $route.params.id }">最新:{{container.item.latest}}</router-link>
+                    <router-link :to="{path:`/detail/${$route.params.id}/chapter/`}">最新:{{container.item.latest}}</router-link>
                 </p>
                 <v-detailtitle :title="'类别标签'" :fontSize=16>
                     <slot>
@@ -54,6 +54,7 @@
 
 <script>
 import {mapActions,mapState} from 'vuex'
+import types from '@/store/types'
 import bookHead from '@/components/common/bookHead'
 import detailTitle from '@/components/common/detailTitle'
 import boxBlockThree from '@/components/bookblock/boxBlockThree'
@@ -83,7 +84,7 @@ export default {
         // 是否历史阅读
         isRead(){
             const read = this.historyRead.find(o => o.id === this.$route.params.id);
-            return read?read.chapter : false;
+            return read?read.chapter : 0;
         },
         // 详情数据
         container() {
@@ -120,9 +121,13 @@ export default {
         },
         // 开始阅读
         startRead(){
-            this.bookRead({id:this.$route.params.id,chapter:-1,fn:()=>{
-                this.$router.push({path:`/detail/${this.$route.params.id}/book`});
-            }});
+            this.$store.commit(types.BOOK_START,{
+                id: this.$route.params.id, 
+                chapter: this.isRead, 
+                fn: () => {
+                    this.$router.push({ path: `/detail/${this.$route.params.id}/book` });
+                }
+            })
         }
     },
     // 监听路由变化

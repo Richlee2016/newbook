@@ -13,9 +13,10 @@ Vue.use(Vuex)
 let state = {
     book: {}, //书本详情
     read: { //正在阅读
-        id: 0,
+        id: readNow.id,
         chapter: readNow.chapter,
-        text: []
+        text: [],
+        addOnOff:false
     },
     historyRead: historyRead // 阅读历史
 }

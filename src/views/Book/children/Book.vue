@@ -69,6 +69,7 @@
 
 <script>
 import { read } from '@/servers/server'
+import types from '@/store/types'
 import { mapActions, mapState } from 'vuex'
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
@@ -125,12 +126,11 @@ export default {
     // 下拉加载
     onInfinite() {
       const self = this;
-      let chapter = this.read.chapter + this.read.text.length;
       this.bookRead({
-        id: this.$route.params.id, chapter: chapter, fn() {
-          self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-        }
-      });
+        fn(){
+            self.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+          }
+      })
     },
     navHide() {
       if (this.navOnOff) {

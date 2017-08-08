@@ -141,3 +141,7 @@ exports.freeRead = function(req, res, next) {
             console.log(err);
         })
 };
+
+exports.emoji = function(req, res, next) {
+
+}

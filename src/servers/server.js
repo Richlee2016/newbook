@@ -17,6 +17,10 @@ const morefiction = (id, start, count) => rxios('GET', '/store/v0/fiction/list/'
 const persistent = (start, count, type) => rxios('GET', '/store/v0/ad/persistent', { start, count, type });
 const detail = (id) => rxios('GET', '/hs/v0/android/fiction/book/' + id);
 const read = (id, chapter) => rxios('POST', '/book/read', { id, chapter });
+const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
+const freeRead = (id) => rxios('GET', '/api/read/' + id);
+const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })
+const chapterCatalogue = (id) => rxios('GET', `/store/v0/fiction/detail/${id}?chapter_id=0`);
 export {
     index, // 首页
     pull, //首页瀑布流请求
@@ -35,4 +39,8 @@ export {
     persistent, //精选（containerThree）
     detail, //详情
     read, //看书
+    freeChapter, //免费章节获取
+    freeRead, //免费阅读
+    freeSearch, //免费搜索
+    chapterCatalogue, //收费章节
 }

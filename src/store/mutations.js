@@ -6,29 +6,39 @@ export default {
         state.book = book;
     },
     // 开始阅读
-    [types.BOOK_READ](state, { id, chapter, text }) {
-        let isExist = state.read.text.find(o => o.txt === text.txt);
-        if (state.read.id !== id) {
-            state.read = Object.assign(state.read, {
-                id,
-                chapter
-            })
-            state.read.text.length = 0;
-        }
-        if (!isExist) {
-            state.read.text.push(text);
+    [types.BOOK_READ](state,{text}){
+        state.read.text.push(text);
+        state.read.addOnOff = true;
+        sessionArr('set', 'readnow', { id:state.read.id, chapter: state.read.chapter});
+    },
+    // scroll增加chapter
+    [types.BOOK_ADD](state){
+        if(state.read.addOnOff){
+            state.read.chapter++;
         };
     },
+    // 进入阅读
+    [types.BOOK_START](state,{id,chapter,fn}){
+        state.read= {
+            id:id,
+            chapter:chapter,
+            text:[],
+            addOnOff:false
+        };
+        sessionArr('set', 'readnow', { id, chapter: chapter });
+        fn&&fn();
+    },
     // 存取 历史记录
-    [types.BOOK_HISTORY_READ](state, { isExist, id, chapter }) {
+    [types.BOOK_HISTORY_READ](state) {
+        let isExist =state.historyRead.find(o => o.id === state.read.id);
         if (isExist) {
             state.historyRead.forEach(o => {
-                if (o.id === id) {
-                    o.chapter = chapter;
+                if (o.id === state.read.id) {
+                    o.chapter = state.read.chapter;
                 }
             })
         } else {
-            state.historyRead.push({ id, chapter });
+            state.historyRead.push({ id:state.read.id, chapter:state.read.chapter });
         };
         if (state.historyRead.length > 6) {
             state.historyRead.length = 6;
