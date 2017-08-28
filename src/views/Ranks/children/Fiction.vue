@@ -50,7 +50,6 @@ export default {
 			ranksFiction(start,count,type)
 			.then(res => {
 				this.book = res.data;
-				console.log(this.book);
 				// this.$overLoad();
 			})
 			.catch(err => {

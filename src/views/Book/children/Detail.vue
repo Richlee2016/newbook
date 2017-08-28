@@ -16,7 +16,7 @@
                 </div>
                 <div class="detail-btn">
                     <div class="start-read">
-                       <a @click="startRead">{{isRead === 0?`开始阅读`:`继续阅读第${isRead}章`}}</a>
+                        <a @click="startRead">{{isRead === 0?`开始阅读`:`继续阅读第${isRead}章`}}</a>
                     </div>
                     <div class="download">
                         <span>下载</span>
@@ -35,13 +35,13 @@
                         </span>
                     </slot>
                 </v-detailtitle>
-    
+
                 <v-detailtitle :title="'喜欢本书的人也喜欢'" :fontSize=16>
                     <slot>
                         <v-blockthree :prop="container.related"></v-blockthree>
                     </slot>
                 </v-detailtitle>
-    
+
                 <v-detailtitle :title="'图书信息'" :fontSize=16>
                     <slot>
                         <p class="info">{{container.item.rights}}</p>
@@ -53,7 +53,7 @@
 </template>
 
 <script>
-import {mapActions,mapState} from 'vuex'
+import { mapActions, mapState } from 'vuex'
 import types from '@/store/types'
 import bookHead from '@/components/common/bookHead'
 import detailTitle from '@/components/common/detailTitle'
@@ -78,13 +78,13 @@ export default {
     computed: {
         // state分发
         ...mapState({
-            detail:'book',
-            historyRead:'historyRead'
+            detail: 'book',
+            historyRead: 'historyRead'
         }),
         // 是否历史阅读
-        isRead(){
+        isRead() {
             const read = this.historyRead.find(o => o.id === this.$route.params.id);
-            return read?read.chapter : 0;
+            return read ? read.chapter : 0;
         },
         // 详情数据
         container() {
@@ -107,9 +107,9 @@ export default {
         // actions 分发
         ...mapActions({
             // 获取数据
-            getData:'bookDetail',
+            getData: 'bookDetail',
             // 文章加载
-            bookRead:'bookRead'
+            bookRead: 'bookRead'
         }),
         // 类别跳转
         categoryLink(data) {
@@ -120,10 +120,10 @@ export default {
             };
         },
         // 开始阅读
-        startRead(){
-            this.$store.commit(types.BOOK_START,{
-                id: this.$route.params.id, 
-                chapter: this.isRead, 
+        startRead() {
+            this.$store.commit(types.BOOK_START, {
+                id: this.$route.params.id,
+                chapter: this.isRead,
                 fn: () => {
                     this.$router.push({ path: `/detail/${this.$route.params.id}/book` });
                 }
@@ -133,12 +133,15 @@ export default {
     // 监听路由变化
     watch: {
         "$route"(to, from) {
-            this.getData({id:this.$route.params.id});
+            const id = this.$route.params.id;
+            if (id && id.length<7 && id.length>5) {
+                this.getData({ id: this.$route.params.id });
+            };
         }
     },
     // 初始化数据
     mounted() {
-        this.getData({id:this.$route.params.id});
+        this.getData({ id: this.$route.params.id });
     }
 }
 </script>
