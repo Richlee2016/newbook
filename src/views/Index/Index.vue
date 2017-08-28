@@ -145,14 +145,14 @@ export default {
     },
     //瀑布流
     onInfinite() {
-      // let count=4;
-      // let start = this.pullbook.length;
-      // start = start === 0 ? 0 : start + count;
-      // pull(start, count)
-      // .then(res => {
-      //   this.pullbook = this.pullbook.concat(res.data.items);
-      //   this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
-      // });
+      let count=4;
+      let start = this.pullbook.length;
+      start = start === 0 ? 0 : start + count;
+      pull(start, count)
+      .then(res => {
+        this.pullbook = this.pullbook.concat(res.data.items);
+        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+      });
     }
   },
   created() {

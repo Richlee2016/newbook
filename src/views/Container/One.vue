@@ -39,7 +39,6 @@ export default {
             start = start === 0 ? 0 : start + count;
             morefiction(this.$route.params.id, start, count)
                 .then(res => {
-                    console.log(res);
                     this.label = res.data.label;
                     this.allbooks = this.allbooks.concat(res.data.items);
                     if (res.data.count === 0) {
@@ -49,8 +48,6 @@ export default {
                     };
                 });
         }
-    },
-    activated() {
     }
 }
 </script>

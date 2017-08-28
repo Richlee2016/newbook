@@ -3,9 +3,8 @@ const cheerio = require('cheerio');
 const cookieSet = 'Hm_lvt_a1d10542fc664b658c3ce982b1cf4937=1500511240; Hm_lpvt_a1d10542fc664b658c3ce982b1cf4937=1500511240; app_id=mi_wap; build=8888; device_id=D9501NJS0HC9AXJ4; user_type=2; device_hash=a6643ed74f772a613f4fc225419a8a2d';
 
 exports.read = function(req, res) {
-    var query = req.query;
-    var id = req.body.id;
-    var chapter = req.body.chapter;
+    var id = req.query.id;
+    var chapter = req.query.chapter;
     var geturl = `http://dushu.xiaomi.com/drm/v0/fiction/link?fiction_id=${id}&chapter_id=${chapter}&format=jsonp`;
     var options = {
         method: 'GET',

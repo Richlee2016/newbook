@@ -1,7 +1,7 @@
 import rxios from './rxios'
 
 const index = () => rxios('GET', '/hs/v3/channel/418');
-const pull = (start, count) => rxios('POST', '/rock/book/recommend', { start, count });
+const pull = (start, count) => rxios('GET', '/rock/book/recommend', { start, count });
 const searchpage = () => rxios('GET', '/api/searchpage');
 const search = (start, count, s) => rxios('GET', 'store/v0/lib/query/onebox', { start, count, s, source: '2,5' });
 const banner = (id) => rxios('GET', '/store/v0/fiction/list/' + id);
@@ -16,7 +16,7 @@ const ranksFiction = (start, count, r) => rxios('GET', '/store/v0/fiction/rank',
 const morefiction = (id, start, count) => rxios('GET', '/store/v0/fiction/list/' + id, { start, count });
 const persistent = (start, count, type) => rxios('GET', '/store/v0/ad/persistent', { start, count, type });
 const detail = (id) => rxios('GET', '/hs/v0/android/fiction/book/' + id);
-const read = (id, chapter) => rxios('POST', '/book/read', { id, chapter });
+const read = (id, chapter) => rxios('GET', '/book/read', { id, chapter });
 const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
 const freeRead = (id) => rxios('GET', '/api/read/' + id);
 const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })

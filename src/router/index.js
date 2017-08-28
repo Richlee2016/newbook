@@ -87,7 +87,6 @@ export default new Router({
         }, //'更多' 页面4
         {
             path: '/detail/:id',
-            name: 'BookIndex',
             component: BookIndex,
             children: [{
                 path: '',

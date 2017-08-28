@@ -50,7 +50,7 @@ app.use(proxyMiddleware(proxySet.context, proxySet.options));
 
 //需要cookie获取的信息
 var cookieApi = require('../src/servers/api');
-app.post('/book/read', cookieApi.read)
+app.get('/book/read', cookieApi.read)
 app.get('/api/free', cookieApi.free)
 app.get('/api/searchpage', cookieApi.searchpage)
 
