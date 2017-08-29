@@ -38,11 +38,12 @@ export default {
 			banner(this.$route.params.id)
 				.then(res => {
 					this.bannerpage = res.data;
+					this.$overLoad(200);
 				})
 		}
 	},
 	activated() {
-		this._initData();
+		this._initData(200);
 	}
 }
 </script>

@@ -75,7 +75,11 @@ export default {
                     one: freeBook[0][0],
                     two: freeBook[1]
                 }
+                this.$overLoad();
             })
+    },
+    activated(){
+        this.$overLoad();
     }
 }
 </script>

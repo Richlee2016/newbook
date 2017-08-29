@@ -65,18 +65,15 @@ export default {
 			})
 		}
 	},
-	mounted (){
+	activated (){
 		searchpage()
 		.then( res => {
 			this.searchChoice = res.data.msg.ads;
-			// return Promise.resolve();
+			return Promise.resolve();
 		})
-		// .then(() => {
-		// 	this.$overLoad();
-		// })
-		// .catch( err => {
-		// 	console.log(err)
-		// })
+		.then(() => {
+			this.$overLoad(100);
+		})
 	}
 }
 </script>

@@ -36,7 +36,6 @@ export default {
     methods: {
         onInfinite() {
             let count = 4;
-            console.log(this.list);
             let start = this.list.length;
             start = start === 0 ? 0 : start + count;
             persistent(start, count, 4)
@@ -50,7 +49,8 @@ export default {
                 });
         }
     },
-    mounted() {
+    activated() {
+        this.$overLoad(200);
     }
 }
 </script>

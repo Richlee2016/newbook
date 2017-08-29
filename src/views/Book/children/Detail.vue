@@ -19,7 +19,7 @@
                         <a @click="startRead">{{isRead === 0?`开始阅读`:`继续阅读第${isRead}章`}}</a>
                     </div>
                     <div class="download">
-                        <span>下载</span>
+                        <span>历史记录</span>
                     </div>
                 </div>
                 <p class="detail-box">{{container.item.content}}</p>
@@ -36,9 +36,9 @@
                     </slot>
                 </v-detailtitle>
 
-                <v-detailtitle :title="'喜欢本书的人也喜欢'" :fontSize=16>
+                <v-detailtitle :title="'作者其他书'" :fontSize=16 v-if="detail.author_books?detail.author_books.length>0:false">
                     <slot>
-                        <v-blockthree :prop="container.related"></v-blockthree>
+                        <v-blockthree :prop="detail.author_books"></v-blockthree>
                     </slot>
                 </v-detailtitle>
 
@@ -88,18 +88,16 @@ export default {
         },
         // 详情数据
         container() {
-            var res = this.detail, item
+            var res = this.detail;
             if (res.item) {
                 return {
                     comment: res.comment,
-                    item: res.item,
-                    related: res.related
+                    item: res.item
                 };
             };
             return {
                 comment: {},
-                item: {},
-                related: []
+                item: {}
             };
         }
     },
@@ -113,7 +111,8 @@ export default {
         }),
         // 类别跳转
         categoryLink(data) {
-            if (data.category_id >= 1000000) {
+            const reg = /\d00000/;
+            if (data.category_id >= 1000000 && reg.test(data.category_id)) {
                 this.$router.push({ path: '/categoryfiction/' + data.category_id });
             } else {
                 this.$router.push({ path: '/categoryfiction/' + encodeURI(data.label) });
@@ -121,6 +120,7 @@ export default {
         },
         // 开始阅读
         startRead() {
+            console.log(this.isRead);
             this.$store.commit(types.BOOK_START, {
                 id: this.$route.params.id,
                 chapter: this.isRead,
@@ -134,14 +134,22 @@ export default {
     watch: {
         "$route"(to, from) {
             const id = this.$route.params.id;
-            if (id && id.length<7 && id.length>5) {
-                this.getData({ id: this.$route.params.id });
+            if (id && id.length < 7 && id.length >= 5) {
+                this.getData({
+                    id: this.$route.params.id, fn: () => {
+                        this.$overLoad();
+                    }
+                });
             };
         }
     },
     // 初始化数据
     mounted() {
-        this.getData({ id: this.$route.params.id });
+        this.getData({
+            id: this.$route.params.id, fn: () => {
+                this.$overLoad();
+            }
+        });
     }
 }
 </script>

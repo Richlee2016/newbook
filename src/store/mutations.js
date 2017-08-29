@@ -16,6 +16,7 @@ export default {
         if(state.read.addOnOff){
             state.read.chapter++;
         };
+        console.log(state.read);
     },
     // 进入阅读
     [types.BOOK_START](state,{id,chapter,fn}){
@@ -41,7 +42,7 @@ export default {
             state.historyRead.push({ id:state.read.id, chapter:state.read.chapter });
         };
         if (state.historyRead.length > 6) {
-            state.historyRead.length = 6;
+            state.historyRead.shift();
         };
         sessionArr('set', 'readlist', state.historyRead);
     }

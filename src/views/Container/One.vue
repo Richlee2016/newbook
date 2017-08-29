@@ -7,7 +7,7 @@
             </div>
         </section>
         <!--下拉加载  -->
-        <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" spinner="circles"></infinite-loading>
+        <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" spinner="circles" v-if="loadshow"></infinite-loading>
     </div>
 </template>
 
@@ -27,6 +27,7 @@ export default {
         return {
             label: "",
             allbooks: [],
+            loadshow:false
         }
     },
     methods: {
@@ -43,11 +44,18 @@ export default {
                     this.allbooks = this.allbooks.concat(res.data.items);
                     if (res.data.count === 0) {
                         this.$refs.infiniteLoading.$emit('$InfiniteLoading:complete');
+                        this.loadshow = false;
                     } else {
                         this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
                     };
                 });
         }
+    },
+    activated(){
+        this.allbooks= [];
+        this.loadshow = true;
+        this.onInfinite();
+        this.$overLoad();
     }
 }
 </script>

@@ -96,6 +96,7 @@ export default {
         this._personlike();
         this._timefree(this.allData[5]);
         this._special(this.allData[6]);
+        this.$overLoad(200);
       })
     },
     _banner(data) {
@@ -157,6 +158,9 @@ export default {
   },
   created() {
     this._getData();
+  },
+  activated(){
+    this.$overLoad(200);
   }
 }
 </script>

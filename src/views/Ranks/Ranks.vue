@@ -60,12 +60,15 @@ export default {
 			return Promise.resolve();
 		})
 		.then(() => {
-			// this.$overLoad();
+			this.$overLoad();
 		})
 		.catch( err => {
 			console.log(err)
 		})	
-	}
+	},
+	activated(){
+        this.$overLoad();
+    }
 }
 </script>
 <style lang="less">

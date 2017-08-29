@@ -24,70 +24,71 @@ const BookIndex = r => require.ensure([], () => r(require('@/views/Book/Index'))
 const Detail = r => require.ensure([], () => r(require('@/views/Book/children/Detail')), 'detail');
 const Book = r => require.ensure([], () => r(require('@/views/Book/children/Book')), 'book');
 const Chapter = r => require.ensure([], () => r(require('@/views/Book/children/Chapter')), 'chapter');
+const History = r => require.ensure([], () => r(require('@/views/Book/children/History')), 'history');
 export default new Router({
     routes: [{
-            path: '/',
-            name: 'Index',
-            component: Index
-        }, //首页
-        {
-            path: '/search',
-            name: 'Search',
-            component: Search
-        }, //搜索页面 
-        {
-            path: '/banner/:id',
-            name: 'Banner',
-            component: Banner
-        }, //Banner图进入页面
-        {
-            path: '/free',
-            name: 'Free',
-            component: Free
-        }, //免费 
-        {
-            path: '/channel/:id',
-            name: 'Channel',
-            component: Channel
-        }, //男女最爱
-        {
-            path: '/category',
-            name: 'Category',
-            component: Category,
-        }, //分类
-        {
-            path: '/categoryfiction/:id',
-            name: 'CategoryFiction',
-            component: CategoryFiction
-        }, //分类详情页
-        {
-            path: '/ranks',
-            name: 'Ranks',
-            component: Ranks
-        }, //排行
-        {
-            path: '/ranksfiction/:id',
-            name: 'RanksFiction',
-            component: RanksFiction
-        }, //排行详情页
-        {
-            path: '/containerone/:id',
-            name: 'ContainerOne',
-            component: ContainerOne
-        }, //'更多' 页面1
-        {
-            path: '/containerthree',
-            name: 'ContainerThree',
-            component: ContainerThree
-        }, //'更多' 页面3
-        {
-            path: '/containerfour',
-            name: 'ContainerFour',
-            component: ContainerFour
-        }, //'更多' 页面4
-        {
-            path: '/detail/:id',
-            component: BookIndex,
+        path: '/',
+        name: 'Index',
+        component: Index
+    }, //首页
+    {
+        path: '/search',
+        name: 'Search',
+        component: Search
+    }, //搜索页面 
+    {
+        path: '/banner/:id',
+        name: 'Banner',
+        component: Banner
+    }, //Banner图进入页面
+    {
+        path: '/free',
+        name: 'Free',
+        component: Free
+    }, //免费 
+    {
+        path: '/channel/:id',
+        name: 'Channel',
+        component: Channel
+    }, //男女最爱
+    {
+        path: '/category',
+        name: 'Category',
+        component: Category,
+    }, //分类
+    {
+        path: '/categoryfiction/:id',
+        name: 'CategoryFiction',
+        component: CategoryFiction
+    }, //分类详情页
+    {
+        path: '/ranks',
+        name: 'Ranks',
+        component: Ranks
+    }, //排行
+    {
+        path: '/ranksfiction/:id',
+        name: 'RanksFiction',
+        component: RanksFiction
+    }, //排行详情页
+    {
+        path: '/containerone/:id',
+        name: 'ContainerOne',
+        component: ContainerOne
+    }, //'更多' 页面1
+    {
+        path: '/containerthree',
+        name: 'ContainerThree',
+        component: ContainerThree
+    }, //'更多' 页面3
+    {
+        path: '/containerfour',
+        name: 'ContainerFour',
+        component: ContainerFour
+    }, //'更多' 页面4
+    {
+        path: '/detail/:id',
+        component: BookIndex,
             children: [{
                 path: '',
                 name: 'Detail',
@@ -100,7 +101,13 @@ export default new Router({
                 path: 'chapter',
                 name: 'Chapter',
                 component: Chapter,
-            }, ]
+            }, {
+                path: 'history',
+                name: 'History',
+                component: History,
+            }]
         }, //阅读器
-    ]
+    ],
+    history:true,
+    saveScrollPosition:true,
 })

@@ -67,7 +67,12 @@ export default {
             .then(res => {
                 this.name = res.data.hidden_info;
                 this.container = res.data.items;
+                this.$overLoad();
             })
+
+    },
+    activated(){
+        this.$overLoad();
     }
 }
 </script>

@@ -53,12 +53,15 @@ export default {
 				categoryFiction(id, start, count, type)
 					.then(res => {
 						this.book = res.data;
+						this.$overLoad();
 					})
 			} else {
-				categoryTag(id, start, count, type)
+				const theid = encodeURI(id);
+				categoryTag(theid, start, count, type)
 					.then(res => {
+						console.log(res);
 						this.book = res.data;
-
+						this.$overLoad();
 					})
 			};
 		},
@@ -77,7 +80,6 @@ export default {
 		if (/\d+/g.test(this.navId)) {
 			categoryTitle(this.$route.params.id)
 				.then(res => {
-					;
 					this.navs = res.data.cate.children;
 					this.navs.unshift({ category_id: this.$route.params.id, label: '全部' })
 					this.title = res.data.cate.label;
@@ -85,6 +87,7 @@ export default {
 				})
 				.then(data => {
 					this._getBook(this.$route.params.id, 0, 10);
+					this.$overLoad(200);
 				})
 				.catch(err => {
 					console.log(err);
@@ -92,7 +95,6 @@ export default {
 		} else {
 			this._getBook(this.$route.params.id, 0, 10)
 		};
-
 	}
 }
 </script>

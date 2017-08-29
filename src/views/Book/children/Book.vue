@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import { read } from '@/servers/server'
 import types from '@/store/types'
 import { mapActions, mapState } from 'vuex'
 import InfiniteLoading from 'vue-infinite-loading';
@@ -164,19 +163,10 @@ export default {
           this.dayNight = true;
           break;
       }
-    },
-    _getRead() {
-      read(this.$route.params.id, 0)
-        .then(res => {
-          this.bookcontainer = JSON.parse(res.data.txt);
-          if (!res.data.txt) {
-            this.isfree = false;
-          };
-        })
     }
   },
-  mounted() {
-
+  created(){
+    this.$overLoad();
   }
 }
 </script>

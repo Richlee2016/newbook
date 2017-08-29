@@ -42,15 +42,17 @@ export default {
 			rankNum:[]
 		}
 	},
-	computed:{
-		
+	 watch :{
+		'$route' (to, from){
+			
+		}
 	},
 	methods:{
 		_getBook(start,count,type){
 			ranksFiction(start,count,type)
 			.then(res => {
 				this.book = res.data;
-				// this.$overLoad();
+				this.$overLoad(200);
 			})
 			.catch(err => {
 				console.log(err);
@@ -65,6 +67,7 @@ export default {
 		}
 	},
 	activated (){
+		this.lineMoveGo(0);
 		this.rankNum =this.$route.params.id.split(',');
 		let total = this.rankNum.shift();
 		this.rankNum.push(total);

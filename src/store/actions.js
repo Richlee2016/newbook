@@ -4,9 +4,10 @@ import { sessionArr } from '@/assets/utils'
 
 export default {
     // 书本详情
-    async bookDetail({ commit }, { id }) {
+    async bookDetail({ commit }, { id ,fn}) {
         const { data } = await detail(id);
         commit(types.BOOK_DETAIL, { book: data });
+        fn&&fn();
     },
     async bookRead({commit,state},{fn}){
         commit(types.BOOK_ADD);

@@ -24,6 +24,13 @@ export default {
     components: {
         "v-head": bookHead,
     },
+    watch :{
+		'$route' (to, from){
+            console.log(0);
+            this.$overOut();
+            this._getChapterCatalogue();
+		}
+	},
     methods: {
         async _getChapter() {
             let chapter;
@@ -43,30 +50,33 @@ export default {
         _getChapterCatalogue() {
             chapterCatalogue(this.$route.params.id)
                 .then(res => {
+                    this.label = res.data.item.title;
                     this.chapter = res.data.item.toc;
-                    //把免费章节存到 localstore
                     let freeChapter = this.chapter.filter(o => {
                         return o.free;
                     }).map(o => {
                         return o.chapter_id;
                     })
-                    // this.$overLoad();
+                    this.$overLoad();
                 })
         },
         read(item) {
-            this.$store.commit(types.BOOK_START,{
-                id: this.$route.params.id, 
-                chapter: item.chapter_id, 
-                fn: () => {
-                    this.$router.push({ path: `/detail/${this.$route.params.id}/book` });
-                }
-            })
+            if(item.price === 0){
+                this.$store.commit(types.BOOK_START,{
+                    id: this.$route.params.id, 
+                    chapter: item.chapter_id, 
+                    fn: () => {
+                        this.$router.push({ path: `/detail/${this.$route.params.id}/book` });
+                    }
+                })
+            }else{
+                this.$router.push({ path: `/detail/${this.$route.params.id}/history` });
+            };
         }
     },
-    mounted() {
+    created(){
+        this.$overOut();
         this._getChapterCatalogue();
-        // this.label = '一念永恒';
-        // this._getChapter();
     }
 }
 </script>

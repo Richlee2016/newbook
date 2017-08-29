@@ -44,9 +44,12 @@ export default {
 					title: [data.section[2], data.section[3]],
 					data: [data.male, data.female]
 				};
-				console.log(this.container);
+				this.$overLoad();
 			})
-	}
+	},
+    activated(){
+        this.$overLoad();
+    }
 }
 </script>
 <style lang="less">
