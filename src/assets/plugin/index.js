@@ -3,7 +3,8 @@ import Vue from "vue";
 export default {
   install(Vue) {
     //切换loading完成取消
-    Vue.prototype.$overLoad = function(time) {
+    Vue.prototype.$overLoad = function(time=800) {
+      console.log(`overload${time}ms`);
       const fn = () => {
         if (this.$parent) {
           this.$parent.fade = false;
@@ -20,7 +21,8 @@ export default {
         fn();
       }
     };
-    Vue.prototype.$overOut = function(time) {
+    Vue.prototype.$overOut = function(time=1000) {
+      console.log(time);
       const fn = () => {
         if (this.$parent) {
           this.$parent.fade = true;

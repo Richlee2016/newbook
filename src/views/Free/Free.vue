@@ -84,5 +84,7 @@ export default {
 }
 </script>
 <style lang="less">
-
+.free-container{
+    background: white;
+}
 </style>

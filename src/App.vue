@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive>
-    <router-view></router-view>
+    <router-view style="min-height:100vh"></router-view>
     </keep-alive>
     <div class="loadyet" v-show="fade">
 			<img src="./assets/images/bookloading.gif" />
@@ -52,5 +52,8 @@ export default {
 		top: 50%;
 		margin-top:30px;
 	}
+}
+#app>div{
+	background: white;
 }
 </style>

@@ -1,5 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
+// import vueg from 'vueg'
+// import 'vueg/css/transition-min.css'
 //前进 返回 判断 设置
 Router.prototype.isBack = false;
 Router.prototype.goback = function() {
@@ -25,7 +27,7 @@ const Detail = r => require.ensure([], () => r(require('@/views/Book/children/De
 const Book = r => require.ensure([], () => r(require('@/views/Book/children/Book')), 'book');
 const Chapter = r => require.ensure([], () => r(require('@/views/Book/children/Chapter')), 'chapter');
 const History = r => require.ensure([], () => r(require('@/views/Book/children/History')), 'history');
-export default new Router({
+const routes = new Router({
     routes: [{
         path: '/',
         name: 'Index',
@@ -111,3 +113,7 @@ export default new Router({
     history:true,
     saveScrollPosition:true,
 })
+
+// Vue.use(vueg, routes);
+
+export default routes
