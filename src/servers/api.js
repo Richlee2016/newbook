@@ -60,83 +60,21 @@ exports.searchpage = function(req, res) {
         })
 }
 
-//免费小说获取
-//小说free
-const prefix = 'http://www.23us.cc';
-var bookSrc = {
-        search: 'http://zhannei.baidu.com/cse/search?s=1682272515249779940&entry=1&q=',
-        book: {},
-        chapter: [],
-        text: ""
-    }
-    //test
-exports.freeSearch = function(req, res, next) {
-    console.log(req.body.name, encodeURI(req.body.name));
-    request({
-            method: 'GET',
-            uri: bookSrc.search + encodeURI(req.body.name),
-            json: true
-        })
-        .then(data => {
-            var $ = cheerio.load(data);
-            var bookDom = $('.result-item').eq(0).find('.result-game-item-detail a');
-            var result = {
-                href: bookDom.attr('href'),
-                title: bookDom.attr('title')
-            }
-
-            if (req.body.name === result.title) {
-                req.book = result;
-                bookSrc.book = result;
-                // return Promise.resolve(result);
-            } else {
-                console.log('do not have this book');
-            };
-            next();
-        })
-        .catch(err => {
-            console.log(err);
-        })
+const freeApi = 'http://localhost:3006/crawler/'
+const freeConf = {
+    search:freeApi + 'book_search',
+    read:id => freeApi + `/book_read/${id}`
 }
 
-
-exports.freeChapter = function(req, res, next) {
-    var href = req.book.href;
+exports.freeBookSearch = function(req,res,next){
+    const {name,author} = req.query;
     request({
-            method: 'GET',
-            uri: href,
-            json: true
-        })
-        .then(data => {
-            var $ = cheerio.load(data);
-            var chapterDom = $('.chapterlist dd a').get();
-            var chapter = chapterDom.map(function(o) {
-                return {
-                    href: $(o).attr('href'),
-                    text: $(o).text()
-                }
-            });
-            res.json({ data: chapter });
-        })
-        .catch(err => {
-            console.log(err);
-        })
-};
-exports.freeRead = function(req, res, next) {
-    var chapter = req.params.id;
-    request({
-            method: 'GET',
-            uri: bookSrc.book.href + chapter,
-            json: true
-        })
-        .then(data => {
-            var $ = cheerio.load(data);
-            var text = $("#content").text();
-            var reg = /\S+/g;
-            var result = text.match(reg);
-            res.json({ data: result });
-        })
-        .catch(err => {
-            console.log(err);
-        })
-};
+        method:'post',
+        uri:freeConf.search,
+        body:{name,author},
+        json:true
+    })
+    .then(data => {
+        res.json(data);
+    })
+}

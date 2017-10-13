@@ -7,6 +7,13 @@ import { sessionArr } from '@/assets/utils'
 let readNow = sessionArr('get', 'readnow') || { id: 0, chapter: 0 };
 // 读取历史记录、
 let historyRead = sessionArr('get', 'readlist') || [];
+// 阅读器样式
+const defaultStyle = {
+    bdColor:'#e9dfc7',
+    fontSize:'14',
+    color:'#333',
+}
+let readerStyle = sessionArr('get', 'readerStyle') || defaultStyle;
 
 Vue.use(Vuex)
 
@@ -18,7 +25,11 @@ let state = {
         text: [],
         addOnOff:false
     },
-    historyRead: historyRead // 阅读历史
+    free:{
+        chapter:[]
+    },
+    historyRead: historyRead, // 阅读历史
+    readerStyle:readerStyle
 }
 
 export default new Vuex.Store({

@@ -17,10 +17,12 @@ const morefiction = (id, start, count) => rxios('GET', '/store/v0/fiction/list/'
 const persistent = (start, count, type) => rxios('GET', '/store/v0/ad/persistent', { start, count, type });
 const detail = (id) => rxios('GET', '/hs/v0/android/fiction/book/' + id);
 const read = (id, chapter) => rxios('GET', '/book/read', { id, chapter });
-const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
-const freeRead = (id) => rxios('GET', '/api/read/' + id);
-const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })
 const chapterCatalogue = (id) => rxios('GET', `/store/v0/fiction/detail/${id}?chapter_id=0`);
+// 免费请求天假
+// const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
+// const freeRead = (id) => rxios('GET', '/api/read/' + id);
+// const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })
+const freeSearch = (name,author) => rxios('GET', '/api/freeBookSearch', { name,author })
 export {
     index, // 首页
     pull, //首页瀑布流请求

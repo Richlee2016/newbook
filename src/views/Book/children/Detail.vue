@@ -19,7 +19,7 @@
                         <a @click="startRead">{{isRead === 0?`开始阅读`:`继续阅读第${isRead}章`}}</a>
                     </div>
                     <div class="download">
-                        <span>历史记录</span>
+                        <span @click="bookFree({name:container.item.title,author:container.item.authors})">历史记录</span>
                     </div>
                 </div>
                 <p class="detail-box">{{container.item.content}}</p>
@@ -54,7 +54,6 @@
 
 <script>
 import { mapActions, mapState } from 'vuex'
-import types from '@/store/types'
 import bookHead from '@/components/common/bookHead'
 import detailTitle from '@/components/common/detailTitle'
 import boxBlockThree from '@/components/bookblock/boxBlockThree'
@@ -107,7 +106,9 @@ export default {
             // 获取数据
             getData: 'bookDetail',
             // 文章加载
-            bookRead: 'bookRead'
+            bookRead: 'bookRead',
+            // 免费阅读加载
+            bookFree:'bookFree'
         }),
         // 类别跳转
         categoryLink(data) {
@@ -121,7 +122,7 @@ export default {
         // 开始阅读
         startRead() {
             console.log(this.isRead);
-            this.$store.commit(types.BOOK_START, {
+            this.$store.commit('BOOK_START', {
                 id: this.$route.params.id,
                 chapter: this.isRead,
                 fn: () => {

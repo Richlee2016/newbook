@@ -1,11 +1,11 @@
 <template>
-    <div class="history-container">
-        
+    <div class="book-box">
+        <v-reader></v-reader>
     </div>
 </template>
 
 <script>
-import bookHead from '@/components/common/bookHead'
+import Reader from '../component/reader.vue'
 export default {
     data() {
         return {
@@ -13,7 +13,7 @@ export default {
         }
     },
     components: {
-        "v-head": bookHead,
+        "v-reader": Reader,
     },
     methods: {
         

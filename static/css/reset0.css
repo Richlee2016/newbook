@@ -143,27 +143,27 @@ li {
 }
 
 
-::-webkit-scrollbar {
+/*::-webkit-scrollbar {
     width: 5px;
     height: 5px;
 }
 
 ::-webkit-scrollbar-track-piece {
     background-color: rgba(0, 0, 0, 0.2);
-    border-radius: 6px;
+    -webkit-border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:vertical {
     height: 5px;
     background-color: rgba(125, 125, 125, 0.7);
-    border-radius: 6px;
+    -webkit-border-radius: 6px;
 }
 
 ::-webkit-scrollbar-thumb:horizontal {
     width: 5px;
     background-color: rgba(125, 125, 125, 0.7);
-    border-radius: 6px;
-}
+    -webkit-border-radius: 6px;
+}*/
 
 html,
 body {
@@ -174,4 +174,8 @@ body {
 body {
     -webkit-text-size-adjust: none;
     -webkit-tap-highlight-color: rgba(0, 0, 0, 0);
+}
+
+#app {
+    width: 100%;
 }

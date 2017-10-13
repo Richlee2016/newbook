@@ -68,7 +68,6 @@
 </template>
 
 <script>
-import types from '@/store/types'
 import { mapActions, mapState } from 'vuex'
 import InfiniteLoading from 'vue-infinite-loading';
 export default {
@@ -93,6 +92,7 @@ export default {
       'read'
     ]),
     readList() {
+      console.log(this.read);
       return this.read.text.map(o => JSON.parse(o.txt));
     },
     borderOnOff() {

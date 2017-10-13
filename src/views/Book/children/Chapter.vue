@@ -11,7 +11,6 @@
 </template>
 
 <script>
-import types from '@/store/types'
 import bookHead from '@/components/common/bookHead'
 import { freeChapter, chapterCatalogue } from '@/servers/server'
 export default {
@@ -32,21 +31,6 @@ export default {
 		}
 	},
     methods: {
-        async _getChapter() {
-            let chapter;
-            try {
-                chapter = await freeChapter('一念永恒');
-                if (chapter.data.data.length > 0) {
-                    this.chapter = chapter.data.data;
-                } else {
-                    // chapter = await 
-                    console.log('收费');
-                };
-            } catch (error) {
-                console.log(error);
-            }
-            this.$overLoad();
-        },
         _getChapterCatalogue() {
             chapterCatalogue(this.$route.params.id)
                 .then(res => {
@@ -62,7 +46,7 @@ export default {
         },
         read(item) {
             if(item.price === 0){
-                this.$store.commit(types.BOOK_START,{
+                this.$store.commit('BOOK_START',{
                     id: this.$route.params.id, 
                     chapter: item.chapter_id, 
                     fn: () => {
