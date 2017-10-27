@@ -27,8 +27,13 @@ const Detail = r => require.ensure([], () => r(require('@/views/Book/children/De
 const Book = r => require.ensure([], () => r(require('@/views/Book/children/Book')), 'book');
 const Chapter = r => require.ensure([], () => r(require('@/views/Book/children/Chapter')), 'chapter');
 const History = r => require.ensure([], () => r(require('@/views/Book/children/History')), 'history');
+const Error = r => require.ensure([], () => r(require('@/views/Error/Error')), 'error');
 const routes = new Router({
     routes: [{
+        path: '/error',
+        name: 'error',
+        component: Error
+    },{
         path: '/',
         name: 'Index',
         component: Index

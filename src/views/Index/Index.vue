@@ -3,6 +3,7 @@
     <div class="top-nav">
       <a>熊猫人之书城联盟</a>
     </div>
+    <div class="scroll-box" v-scroll>
     <div class="bookcity" ref="cityscroll">
       <section>
         <!--banner-->
@@ -29,9 +30,11 @@
         <div class="clear-line"></div>
         <v-pullbook :data="pullbook"></v-pullbook>
         <!--下拉加载  -->
-        <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" spinner="circles">
-        </infinite-loading>
+        <r-upgif ref="upGif"></r-upgif>
+        <!-- <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" spinner="circles">
+        </infinite-loading> -->
       </section>
+    </div>
     </div>
   </div>
 </template>
@@ -55,6 +58,9 @@ export default {
   name: 'index',
   data() {
     return {
+      RS_opt:{
+        upLoad:true
+      },
       allData: null,
       bannerData: [],//banner
       weekHotData: {},//本周最热

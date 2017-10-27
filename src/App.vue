@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <keep-alive>
-    <router-view style="min-height:100vh"></router-view>
+    <router-view style="height:100vh;overflow:hidden;"></router-view>
     </keep-alive>
     <div class="loadyet" v-show="fade">
 			<img src="./assets/images/bookloading.gif" />

@@ -14,6 +14,7 @@
         "body-parser": "^1.17.2",
         "cheerio": "^1.0.0-rc.2",
         "hammerjs": "^2.0.8",
+        "iscroll": "^5.2.0",
         "lodash": "^4.17.4",
         "request-promise": "^4.2.1",
         "vue": "^2.3.3",
