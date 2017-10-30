@@ -1,6 +1,6 @@
 <template>
   	<ul class="box-block-four">
-		<li v-for="(item,index) in prop">
+		<li v-for="(item,index) in prop" :key="item.reference_id">
 			<router-link :to="{path: '/banner/' + item.reference_id}">
 			<img :src="item.ad_pic_url"/>
 			</router-link>

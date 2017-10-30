@@ -14,7 +14,8 @@ const Index = r => require.ensure([], () => r(require('@/views/Index/Index')), '
 const Search = r => require.ensure([], () => r(require('@/views/Search/Search')), 'search');
 const Banner = r => require.ensure([], () => r(require('@/views/Banner/Banner')), 'banner');
 const Free = r => require.ensure([], () => r(require('@/views/Free/Free')), 'free');
-const Channel = r => require.ensure([], () => r(require('@/views/Channel/Channel')), 'channel');
+const BoyChannel = r => require.ensure([], () => r(require('@/views/Channel/Boy')), 'Boychannel');
+const GirlChannel = r => require.ensure([], () => r(require('@/views/Channel/Girl')), 'GirlChannel');
 const Category = r => require.ensure([], () => r(require('@/views/Category/Category')), 'category');
 const CategoryFiction = r => require.ensure([], () => r(require('@/views/Category/children/Fiction')), 'categoryFiction');
 const Ranks = r => require.ensure([], () => r(require('@/views/Ranks/Ranks')), 'ranks');
@@ -54,9 +55,13 @@ const routes = new Router({
         component: Free
     }, //免费 
     {
-        path: '/channel/:id',
-        name: 'Channel',
-        component: Channel
+        path: '/boy/:id',
+        name: 'BoyChannel',
+        component: BoyChannel
+    },{
+        path: '/girl/:id',
+        name: 'GirlChannel',
+        component: GirlChannel
     }, //男女最爱
     {
         path: '/category',

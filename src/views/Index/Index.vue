@@ -40,37 +40,37 @@
 </template>
 
 <script>
-import Banner from './components/banner'
-import weekHot from './components/weekhot'
-import Recommend from './components/recommend'
-import girlLike from './components/girllike'
-import boyLike from './components/boylike'
-import timeFree from './components/timefree'
-import persistent from './components/persistent'
-import pullBook from './components/pullbook'
+import Banner from "./components/banner";
+import weekHot from "./components/weekhot";
+import Recommend from "./components/recommend";
+import girlLike from "./components/girllike";
+import boyLike from "./components/boylike";
+import timeFree from "./components/timefree";
+import persistent from "./components/persistent";
+import pullBook from "./components/pullbook";
 
-import defaultsDeep from 'lodash/defaultsDeep'
-import InfiniteLoading from 'vue-infinite-loading';
-import { index, pull } from '@/servers/server'
-import { setGroup } from '@/assets/utils'
+import defaultsDeep from "lodash/defaultsDeep";
+import InfiniteLoading from "vue-infinite-loading";
+import { index, pull } from "@/servers/server";
+import { setGroup } from "@/assets/utils";
 
 export default {
-  name: 'index',
+  name: "index",
   data() {
     return {
-      RS_opt:{
-        upLoad:true
+      RS_opt: {
+        upLoad: true
       },
       allData: null,
-      bannerData: [],//banner
-      weekHotData: {},//本周最热
-      recommendData: {},//重磅推荐
-      girllike: {},//女生最爱
-      boylike: {},//男生最爱
-      timefree: {},//限时免费
-      special: {},//精选专题
-      pullbook: [],//瀑布流
-    }
+      bannerData: [], //banner
+      weekHotData: {}, //本周最热
+      recommendData: {}, //重磅推荐
+      girllike: {}, //女生最爱
+      boylike: {}, //男生最爱
+      timefree: {}, //限时免费
+      special: {}, //精选专题
+      pullbook: [] //瀑布流
+    };
   },
   components: {
     "v-banner": Banner,
@@ -81,7 +81,7 @@ export default {
     "v-timefree": timeFree,
     "v-persistent": persistent,
     "v-pullbook": pullBook,
-    InfiniteLoading,
+    InfiniteLoading
   },
   methods: {
     // 转化数组
@@ -89,7 +89,7 @@ export default {
       let group = defaultsDeep({}, arr);
       if (group.data) {
         group.data.data = setGroup(group.data.data, { num: num });
-      };
+      }
       return group;
     },
     // 初始化数据
@@ -103,7 +103,7 @@ export default {
         this._timefree(this.allData[5]);
         this._special(this.allData[6]);
         this.$overLoad(200);
-      })
+      });
     },
     _banner(data) {
       let res = defaultsDeep({}, data);
@@ -119,10 +119,10 @@ export default {
       let arr = [];
       if (res.data) {
         arr = setGroup(res.data.data, { num: 6 });
-        arr = arr.map((o) => setGroup(o, 1, 4));
+        arr = arr.map(o => setGroup(o, 1, 4));
         arr = setGroup(arr, { num: 2 });
         res.data.data = arr;
-      };
+      }
       this.recommendData = res;
     },
     _personlike() {
@@ -133,13 +133,13 @@ export default {
       let res = defaultsDeep({}, data);
       let arr = [];
       if (res.data) {
-        arr = res.data.data.map((o) => {
+        arr = res.data.data.map(o => {
           return {
             title: o.ad_name,
             cover: o.data.cover
-          }
+          };
         });
-      };
+      }
       this.timefree = {
         ad_name: data.ad_name || "",
         data: arr,
@@ -152,23 +152,36 @@ export default {
     },
     //瀑布流
     onInfinite() {
-      let count=4;
+      let count = 4;
       let start = this.pullbook.length;
       start = start === 0 ? 0 : start + count;
-      pull(start, count)
-      .then(res => {
+      pull(start, count).then(res => {
         this.pullbook = this.pullbook.concat(res.data.items);
-        this.$refs.infiniteLoading.$emit('$InfiniteLoading:loaded');
+        this.$refs.infiniteLoading.$emit("$InfiniteLoading:loaded");
       });
+    },
+    //自写瀑布流插件
+    RS_upload(down, over) {
+      let count = 4;
+      let start = this.pullbook.length;
+      start = start === 0 ? 0 : start + count;
+      if (this.pullbook.length < 8) {
+        pull(start, count).then(res => {
+          this.pullbook = this.pullbook.concat(res.data.items);
+          down();
+        });
+      } else {
+        over();
+      }
     }
   },
   created() {
     this._getData();
   },
-  activated(){
+  activated() {
     this.$overLoad(200);
   }
-}
+};
 </script>
 
 <style lang='less'>

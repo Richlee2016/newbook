@@ -23,10 +23,10 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from 'vue-awesome-swiper'
-  import Search from '@/components/common/search'
+import { swiper, swiperSlide } from "vue-awesome-swiper";
+import Search from "@/components/common/search";
 export default {
-  name: 'banner',
+  name: "banner",
   components: {
     //搜索
     "v-search": Search,
@@ -43,33 +43,34 @@ export default {
       banner: {
         swiper: false,
         box: 3,
-        autoplay: 4,
+        autoplay: 4
       },
-      navArr: [{
-        icon: "c-free",
-        name: "免费",
-        id: 371
-      },
-      {
-        icon: "c-girl",
-        name: "女生",
-        id: 370
-      },
-      {
-        icon: "c-boy",
-        name: "男生",
-        id: 369
-      },
-      {
-        icon: "c-classfy",
-        name: "分类"
-      },
-      {
-        icon: "c-rank",
-        name: "排行"
-      }
-      ],
-    }
+      navArr: [
+        {
+          icon: "c-free",
+          name: "免费",
+          id: 371
+        },
+        {
+          icon: "c-girl",
+          name: "女生",
+          id: 370
+        },
+        {
+          icon: "c-boy",
+          name: "男生",
+          id: 369
+        },
+        {
+          icon: "c-classfy",
+          name: "分类"
+        },
+        {
+          icon: "c-rank",
+          name: "排行"
+        }
+      ]
+    };
   },
   props: {
     data: {
@@ -81,25 +82,26 @@ export default {
   },
   methods: {
     navGo(i, id) {
+      console.log(i);
       if (i === 0) {
-        this.$router.push({ path: '/free' })
-      } else if (i >= 1 && i <= 2) {
-        this.$router.push({ path: '/channel/' + id })
+        this.$router.push({ path: "/free" });
+      } else if (i == 1) {
+        this.$router.push({ path: "/girl/" + id });
+      } else if (i == 2) {
+        this.$router.push({ path: "/boy/" + id });
       } else if (i == 3) {
-        this.$router.push({ path: 'category' });
+        this.$router.push({ path: "category" });
       } else if (i == 4) {
-        this.$router.push({ path: 'ranks' })
-      };
+        this.$router.push({ path: "ranks" });
+      }
     }
   },
-  mounted() {
-    
-  }
-}
+  mounted() {}
+};
 </script>
 
 <style>
-.banner-img{
+.banner-img {
   width: 100%;
 }
 </style>

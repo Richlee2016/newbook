@@ -1,25 +1,29 @@
 <template>
 	<div class="container-four">
 		<v-head :title="'分类'"></v-head>
-		<section v-for="(item,index) in container.title" :key="index">
-			<div class="title">
-				<label :style="{background:index===1?'#ffae20':'#4b79c2'}" class="icon-class"></label>
-				<span>{{item.name}}</span>
+		<div class="scroll-box" v-scroll>
+			<div>
+				<section v-for="(item,index) in container.title" :key="index">
+					<div class="title">
+						<label :style="{background:index===1?'#ffae20':'#4b79c2'}" class="icon-class"></label>
+						<span>{{item.name}}</span>
+					</div>
+					<ul class="four_main">
+						<li v-for="data in container.data[index]" :key="data.category_id">
+							<router-link :to="{name:'CategoryFiction',params:{id:data.category_id} }">
+								<div class="left">
+									<span>{{data.label}}</span>
+									<label>{{data.fiction_count}}</label>
+								</div>
+								<div class="right">
+									<img :src="data.new_image" />
+								</div>
+							</router-link>
+						</li>
+					</ul>
+				</section>
 			</div>
-			<ul class="four_main">
-				<li v-for="data in container.data[index]" :key="data.category_id">
-					<router-link :to="{name:'CategoryFiction',params:{id:data.category_id} }">
-						<div class="left">
-							<span>{{data.label}}</span>
-							<label>{{data.fiction_count}}</label>
-						</div>
-						<div class="right">
-							<img :src="data.new_image" />
-						</div>
-					</router-link>
-				</li>
-			</ul>
-		</section>
+		</div>
 	</div>
 </template>
 
@@ -54,7 +58,6 @@ export default {
 </script>
 <style lang="less">
 .container-four {
-	padding: 5px;
 	.title {
 		height: 40px;
 		line-height: 40px;

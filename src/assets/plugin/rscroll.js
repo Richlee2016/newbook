@@ -37,7 +37,7 @@ RS_opt={
  */
 
 let RS_opt = {
-  init: { mouseWheel: true, click: true },
+  init: { mouseWheel: true, click: true, probeType: 1 },
   downLoad: false, //下拉刷新
   upLoad: false //上拉刷新
 };
@@ -51,7 +51,8 @@ class Rscroll {
   }
 
   initSet() {
-    // this.el.style.height = '100vh';
+    const list = this.el.querySelector(".scroll-list");
+    list.style.minHeight=this.el.offsetHeight + 40 + 'px';
   }
 
   initScroll() {
@@ -64,20 +65,35 @@ class Rscroll {
   }
 
   upLoad() {
-    // const {upGif} = this.vnode.$refs;
-    this.S.on("scrollEnd", () => {
+    const { upGif } = this.vnode.$refs; //获取 vnode
+ 
+    let down = function() {}; //加载完函数
+    let over = function() {}; //加载结束函数
+    // 进入页面第一次加载
+    this.vnode.RS_upload && this.vnode.RS_upload(down);
+    // 请求封装
+    const fetchGo = () => {
       const { maxScrollY, y } = this.S;
-      const over = () => {
+      down = () => {
         setTimeout(() => {
           this.S.refresh();
-          console.log(maxScrollY - 20);
           this.S.scrollTo(0, maxScrollY - 30);
         }, 30);
       };
-      if (-y > -maxScrollY - 10) {
-        // upGif.$data.out = false;
-        this.vnode.RS_upload && this.vnode.RS_upload(over);
+      over = () => {
+        upGif.$data.load = false;
+        this.S.scrollTo(0, maxScrollY + 40,1000);
       }
+      if (-y > -maxScrollY - 20) {
+        this.vnode.RS_upload && this.vnode.RS_upload(down,over);
+      }
+    };
+
+    this.S.on("scrollEnd", () => {
+      fetchGo();
+    });
+    this.S.on("scroll", () => {
+      fetchGo();
     });
   }
 
@@ -104,10 +120,11 @@ class Rscroll {
 
   scrollGo() {
     // 初始设置
-    this.initSet();
+    // this.initSet();
     // 初始化
     this.initScroll().then(S => {
       this.S = S;
+      this.initSet();
       this.S.on("beforeScrollStart", () => {
         setTimeout(() => {
           this.S.refresh();
@@ -121,7 +138,7 @@ class Rscroll {
   }
 }
 
-import downGif from "./components/upGif"
+import downGif from "./components/upGif";
 
 export default {
   install(Vue) {
@@ -136,10 +153,9 @@ export default {
     });
 
     Vue.mixin({
-      components:{
-        "r-upgif":downGif
+      components: {
+        "r-upgif": downGif
       }
-    })
-
+    });
   }
 };
