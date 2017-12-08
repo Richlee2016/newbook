@@ -26,6 +26,11 @@ let state = {
         addOnOff:false
     },
     free:{
+        id:null,
+        loading:true,
+        name:null,
+        author:null,
+        href:null,
         chapter:[]
     },
     historyRead: historyRead, // 阅读历史

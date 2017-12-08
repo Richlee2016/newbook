@@ -1,38 +1,60 @@
 <template>
   	<div class="upGif" v-show="out">
-		<div v-show="load">go</div>
+		<div v-show="load">
+			<div class="svg">
+				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
+				width="24px" height="30px" viewBox="0 0 24 30" style="enable-background:new 0 0 50 50;" xml:space="preserve">
+				<rect x="0" y="10" width="4" height="10" fill="#FF6700" opacity="0.2">
+				<animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0s" dur="0.6s" repeatCount="indefinite" />
+				</rect>
+				<rect x="8" y="10" width="4" height="10" fill="#FF6700"  opacity="0.2">
+				<animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.15s" dur="0.6s" repeatCount="indefinite" />
+				</rect>
+				<rect x="16" y="10" width="4" height="10" fill="#FF6700"  opacity="0.2">
+				<animate attributeName="opacity" attributeType="XML" values="0.2; 1; .2" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="height" attributeType="XML" values="10; 20; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+				<animate attributeName="y" attributeType="XML" values="10; 5; 10" begin="0.3s" dur="0.6s" repeatCount="indefinite" />
+				</rect>
+				</svg>
+			</div>	
+		</div>
 		<span v-show="!load">{{text}}</span>
 	</div>	  
 </template>
 
 <script>
-
 export default {
-	props :{
-		
-	},
-	data(){
-		return {
-			text:'没有更多',
-			load:true,
-			out:true
-		}
-	}
-}
+  props: {},
+  data() {
+    return {
+      text: "没有更多⊙﹏⊙‖∣°",
+      load: true,
+      out: true
+    };
+  }
+};
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less'>
-.upGif{
-	// transform: translateY(30px);
-	height: 40px;
-	width: 100%;
-	background: rebeccapurple;
-	span{
-		color: white;
-	}
-	div{
-		color:white;
-	}
+.upGif {
+  // transform: translateY(30px);
+  height: 40px;
+  width: 100%;
+  background: #efeff0;
+  text-align: center;
+  span {
+	color: #666;
+	line-height: 40px;
+  }
+  .svg {
+    width: 24px;
+	height: 30px;
+	margin: auto;
+  }
 }
 </style>

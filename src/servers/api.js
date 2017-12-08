@@ -61,17 +61,33 @@ exports.searchpage = function(req, res) {
 }
 
 const freeApi = 'http://localhost:3006/crawler/'
+const bookApi = 'http://localhost:3006/book_api'
 const freeConf = {
     search:freeApi + 'book_search',
-    read:id => freeApi + `/book_read/${id}`
+    read:id => freeApi + `/book_read/${id}`,
+    freeBook:id => bookApi + `/freebook/${id}`
 }
 
 exports.freeBookSearch = function(req,res,next){
-    const {name,author} = req.query;
+    const {name,author,id} = req.query;
+    console.log(freeConf.search);
     request({
         method:'post',
         uri:freeConf.search,
-        body:{name,author},
+        body:{name,author,id},
+        json:true
+    })
+    .then(data => {
+        res.json(data);
+    })
+}
+
+exports.fetchFreeBook = function(req,res,next){
+    const {id} = req.query;
+    request({
+        method:'get',
+        uri:freeConf.freeBook(id),
+        body:{id},
         json:true
     })
     .then(data => {

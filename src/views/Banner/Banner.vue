@@ -1,18 +1,20 @@
 <template>
-	<div class="banner-main" v-scroll="{box:{box:1}}">
-		<div class="scroll-box">
+	<div class="banner-main">
 		<v-head :title="bannerpage.label"></v-head>
-		<img class="b-img" :src="bannerpage.banner" />
-		<p class="description">{{bannerpage.description}}</p>
-		<div class="clear-line"></div>
-		<section>
-			<div class="banner-inner" v-for="(item,index) in bannerpage.items" :key="index">
-				<v-blockone :prop="item" :bookfree="'限免'"></v-blockone>
-			</div>
-		</section>
-		<v-more :titleone="'查看更多'" @onemore="$router.push({ path:'/containerthree', query:{start:0,count:10,type:4}})">
-		</v-more>
-        </div>
+		<div class="scroll-box" v-scroll>
+      <div>
+        <img class="b-img" :src="bannerpage.banner" />
+        <p class="description">{{bannerpage.description}}</p>
+        <div class="clear-line"></div>
+        <section>
+          <div class="banner-inner" v-for="(item,index) in bannerpage.items" :key="index">
+            <v-blockone :prop="item" :bookfree="'限免'"></v-blockone>
+          </div>
+        </section>
+        <v-more :titleone="'查看更多'" @onemore="$router.push({ path:'/containerthree', query:{start:0,count:10,type:4}})">
+        </v-more>
+      </div>
+    </div>
 	</div>
 </template>
 
@@ -31,8 +33,8 @@ export default {
   },
   data() {
     return {
-	  bannerpage: {},
-	  test:1
+      bannerpage: {},
+      test: 1
     };
   },
   methods: {
@@ -45,8 +47,8 @@ export default {
     }
   },
   activated() {
-	this._initData(200);
-	this.test = 2;
+    this._initData(200);
+    this.test = 2;
   }
 };
 </script>

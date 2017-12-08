@@ -4,13 +4,13 @@
       <v-search></v-search>
     </router-link>
     <div class="city-scroll">
-      <swiper :options="swiperOption" ref="mySwiper">
-        <swiper-slide v-for="(item,index) in data[0]?data[0] : []" v-if="item.ad_pic_url" :key="index">
-          <router-link :to="{path: '/banner/' + item.reference_id }">
-            <img class="banner-img" :src="item.ad_pic_url" />
-          </router-link>
-        </swiper-slide>
-      </swiper>
+        <r-banner>
+            <li v-for="(item,index) in data[0]?data[0] : []" v-if="item.ad_pic_url" :key="index">
+                <router-link :to="{path: '/banner/' + item.reference_id }">
+                  <img class="banner-img" :src="item.ad_pic_url" />
+                </router-link>
+            </li>
+        </r-banner>
     </div>
     <!--导航-->
     <ul class="city-nav">
@@ -23,15 +23,15 @@
 </template>
 
 <script>
-import { swiper, swiperSlide } from "vue-awesome-swiper";
+// import { swiper, swiperSlide } from "vue-awesome-swiper";
 import Search from "@/components/common/search";
 export default {
   name: "banner",
   components: {
     //搜索
-    "v-search": Search,
-    swiper,
-    swiperSlide
+    "v-search": Search
+    // swiper,
+    // swiperSlide
   },
   data() {
     return {

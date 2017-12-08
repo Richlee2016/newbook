@@ -19,7 +19,6 @@ import bookHead from "@/components/common/bookHead";
 import boxBlockOne from "@/components/bookblock/boxBlockOne";
 import { morefiction } from "@/servers/server";
 export default {
-  name:"containerOne",
   components: {
     "v-head": bookHead,
     //书块one
@@ -28,8 +27,7 @@ export default {
   data() {
     return {
       RS_opt: {
-        upLoad: true,
-        refresh:true
+        upLoad: true
       },
       label: "",
       allbooks: [],
@@ -53,11 +51,14 @@ export default {
           over&&over();
         } else {
           down&&down();
-          console.log(0);
-          this.$overLoad();
         }
       });
     }
+  },
+  activated() {
+    this.allbooks = [];
+    this.RS_upload();
+    this.$overLoad();
   }
 };
 </script>

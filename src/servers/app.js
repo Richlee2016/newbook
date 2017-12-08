@@ -6,4 +6,5 @@ module.exports = function(app) {
     app.get("/api/free", api.free);
     app.get("/api/searchpage", api.searchpage);
     app.get("/api/freeBookSearch", api.freeBookSearch);
+    app.get("/api/fetchFreeBook", api.fetchFreeBook);
 };

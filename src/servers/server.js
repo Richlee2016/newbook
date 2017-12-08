@@ -22,7 +22,8 @@ const chapterCatalogue = (id) => rxios('GET', `/store/v0/fiction/detail/${id}?ch
 // const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
 // const freeRead = (id) => rxios('GET', '/api/read/' + id);
 // const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })
-const freeSearch = (name,author) => rxios('GET', '/api/freeBookSearch', { name,author })
+const freeSearch = (name,author,id) => rxios('GET', '/api/freeBookSearch', { name,author,id });
+const fetchFreeBook = id => rxios('GET',`/api/fetchFreeBook`,{id3});
 export {
     index, // 首页
     pull, //首页瀑布流请求
@@ -41,8 +42,8 @@ export {
     persistent, //精选（containerThree）
     detail, //详情
     read, //看书
-    freeChapter, //免费章节获取
     freeRead, //免费阅读
     freeSearch, //免费搜索
+    fetchFreeBook,
     chapterCatalogue, //收费章节
 }

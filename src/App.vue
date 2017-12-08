@@ -1,6 +1,6 @@
 <template>
   <div id="app">
-    <keep-alive>
+    <keep-alive :exclude="['containerOne']">
     <router-view style="height:100vh;overflow:hidden;"></router-view>
     </keep-alive>
     <div class="loadyet" v-show="fade">

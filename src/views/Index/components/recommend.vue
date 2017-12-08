@@ -33,48 +33,49 @@
 </template>
 
 <script>
-import {change} from '@/assets/mixins'
-import bookTitle from '@/components/common/bookTitle'
-import bookMore from '@/components/common/bookMore'
-import boxBlockOne from '@/components/bookblock/boxBlockOne'
-import boxBlockTwo from '@/components/bookblock/boxBlockTwo'
+import { change } from "@/assets/mixins";
+import bookTitle from "@/components/common/bookTitle";
+import bookMore from "@/components/common/bookMore";
+import boxBlockOne from "@/components/bookblock/boxBlockOne";
+import boxBlockTwo from "@/components/bookblock/boxBlockTwo";
 export default {
-	components:{
-		//标题
-		"v-title":bookTitle,
-		//更多
-		"v-more":bookMore,
-		//书块one
-		"v-blockone":boxBlockOne,
-		//书块two
-		"v-blocktwo":boxBlockTwo
-	},
-	mixins:[change],
-	data (){
-		return {
-			recommend :{},
-			tabn:0
-		}
-	},
-	props:{
-		data:{
-			type:Object,
-			default (){
-				return {};
-			}
-		}
-	},
-	methods :{
-		twomore (){
-			let id =369;
-			if(this.tabn === 0){
-				id = 369;
-			}else{
-				id = 370;
-			};
-			this.$router.push({path: '/channel/'+id})
-		}
-	}
-}
+  components: {
+    //标题
+    "v-title": bookTitle,
+    //更多
+    "v-more": bookMore,
+    //书块one
+    "v-blockone": boxBlockOne,
+    //书块two
+    "v-blocktwo": boxBlockTwo
+  },
+  mixins: [change],
+  data() {
+    return {
+      recommend: {},
+      tabn: 0
+    };
+  },
+  props: {
+    data: {
+      type: Object,
+      default() {
+        return {};
+      }
+    }
+  },
+  methods: {
+    twomore() {
+      let id = 369;
+      if (this.tabn === 0) {
+        id = 369;
+        this.$router.push({ path: "/boy/" + id });
+      } else {
+        id = 370;
+        this.$router.push({ path: "/girl/" + id });
+      }
+    }
+  }
+};
 </script>
 

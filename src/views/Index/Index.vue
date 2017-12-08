@@ -31,8 +31,6 @@
         <v-pullbook :data="pullbook"></v-pullbook>
         <!--下拉加载  -->
         <r-upgif ref="upGif"></r-upgif>
-        <!-- <infinite-loading :on-infinite="onInfinite" ref="infiniteLoading" spinner="circles">
-        </infinite-loading> -->
       </section>
     </div>
     </div>
@@ -50,7 +48,6 @@ import persistent from "./components/persistent";
 import pullBook from "./components/pullbook";
 
 import defaultsDeep from "lodash/defaultsDeep";
-import InfiniteLoading from "vue-infinite-loading";
 import { index, pull } from "@/servers/server";
 import { setGroup } from "@/assets/utils";
 
@@ -81,7 +78,6 @@ export default {
     "v-timefree": timeFree,
     "v-persistent": persistent,
     "v-pullbook": pullBook,
-    InfiniteLoading
   },
   methods: {
     // 转化数组
@@ -150,29 +146,15 @@ export default {
       let res = defaultsDeep({}, data);
       this.special = res;
     },
-    //瀑布流
-    onInfinite() {
-      let count = 4;
-      let start = this.pullbook.length;
-      start = start === 0 ? 0 : start + count;
-      pull(start, count).then(res => {
-        this.pullbook = this.pullbook.concat(res.data.items);
-        this.$refs.infiniteLoading.$emit("$InfiniteLoading:loaded");
-      });
-    },
     //自写瀑布流插件
     RS_upload(down, over) {
       let count = 4;
       let start = this.pullbook.length;
       start = start === 0 ? 0 : start + count;
-      if (this.pullbook.length < 8) {
-        pull(start, count).then(res => {
-          this.pullbook = this.pullbook.concat(res.data.items);
-          down();
-        });
-      } else {
-        over();
-      }
+      pull(start, count).then(res => {
+        this.pullbook = this.pullbook.concat(res.data.items);
+        down && down();
+      });
     }
   },
   created() {
