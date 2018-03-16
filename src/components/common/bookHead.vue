@@ -6,7 +6,9 @@
 			</div>
 			<div class="title" v-if="titleShow">{{title}}</div>
 			<div class="right" v-if="iconShow">
-				<span class="icon-home"></span>
+				<router-link to="/">
+					<span class="icon-home"></span>
+				</router-link>
 			</div>
 			<slot name="search"></slot>
 		</div>

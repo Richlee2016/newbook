@@ -43,7 +43,7 @@ compiler.plugin('compilation', function(compilation) {
 
 //bodyParser 处理
 app.use(bodyParser.urlencoded({ extended: true }));
-
+require('../server/middleware/database');
 // proxy api requests
 const proxySet = require('../src/servers/proxy');
 app.use(proxyMiddleware(proxySet.context, proxySet.options));

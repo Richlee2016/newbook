@@ -60,37 +60,28 @@ exports.searchpage = function(req, res) {
         })
 }
 
-const freeApi = 'http://localhost:3006/crawler/'
-const bookApi = 'http://localhost:3006/book_api'
-const freeConf = {
-    search:freeApi + 'book_search',
-    read:id => freeApi + `/book_read/${id}`,
-    freeBook:id => bookApi + `/freebook/${id}`
+const prefixFree = 'http://127.0.0.1:7001/api/books/' 
+const freeApi = {
+    free:(id,name,author) => `${prefixFree}FreeBooks/${id}?name=${name}&author=${author}`,
+    read:(id,chapter) => `${prefixFree}FreeBookRead?id={id}&chapter=${chapter}`
 }
 
 exports.freeBookSearch = function(req,res,next){
-    const {name,author,id} = req.query;
-    console.log(freeConf.search);
-    request({
-        method:'post',
-        uri:freeConf.search,
-        body:{name,author,id},
-        json:true
-    })
-    .then(data => {
-        res.json(data);
-    })
+//     const {name,author,id} = req.query;
+//     request('https://www.baidu.com/?tn=39042058_27_oem_dg')
+//     .then(data => {
+//         res.json(data);
+//     })
 }
 
 exports.fetchFreeBook = function(req,res,next){
-    const {id} = req.query;
-    request({
-        method:'get',
-        uri:freeConf.freeBook(id),
-        body:{id},
-        json:true
-    })
-    .then(data => {
-        res.json(data);
-    })
+//     const {id,chapter} = req.query;
+//     request({
+//         method:'get',
+//         uri:freeApi.read(id,chapter),
+//         json:true
+//     })
+//     .then(data => {
+        // res.json(data);
+//     })
 }

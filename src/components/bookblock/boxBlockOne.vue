@@ -52,6 +52,8 @@ export default {
 		newid (){
 			return this.prop.fiction_id || this.prop.sid ||this.prop.source_id;
 		}
+	},
+	crated(){
 	}
 }
 </script>
@@ -106,8 +108,8 @@ export default {
 			background: #49ab3f;
 		    color: #fff;
 		    width: 100%;
-		    -webkit-transform-origin: top center;
-		    -webkit-transform: translateX(50%) rotate(45deg) translateY(50%) scale(0.8);
+		    transform-origin: top center;
+		    transform: translateX(50%) rotate(45deg) translateY(50%) scale(0.8);
 		    font-size: 14px;
 		    text-align: center;
 		}

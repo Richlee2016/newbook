@@ -1,0 +1,27 @@
+{
+    "apps": [{
+        "name": "book",
+        "script": "app.js",
+        "env": {
+            "COMMON_VARIABLE": "true"
+        },
+        "env_production": {
+            "NODE_ENV": "production"
+        }
+    }],
+    "deploy": {
+        "production": {
+            "user": "rich",
+            "host": ["120.24.92.113"],
+            "port": "39999",
+            "ref": "origin/master",
+            "repo": "git@git.oschina.net:richfly/vuebook.git",
+            "path": "/www/book/production",
+            "ssh_options": "StrictHostKeyChecking=no",
+            "post-deploy": "yarn && pm2 startOrRestart ecosystem.json --env production",
+            "env": {
+                "NODE_ENV": "production"
+            }
+        }
+    }
+}

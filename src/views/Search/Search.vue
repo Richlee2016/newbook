@@ -26,12 +26,10 @@
 							<v-blockone
 							:prop="item"
 							>
-							<slot name="serach">
-								<div class="search-text">
+								<div class="search-text" slot="search">
 									<p>{{item.intro}}</p>
 									<h3 class="author">{{item.role[0][1]}}</h3>
 								</div>
-							</slot>
 							</v-blockone>
 						</li>
 					</ul>	  

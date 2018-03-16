@@ -18,7 +18,7 @@
 <script>
 import bookTitle from '@/components/common/bookTitle'
 import bookMore from '@/components/common/bookMore'
-import boxBlockFour from '@/components/bookblock/boxblockfour'
+import boxBlockFour from '@/components/bookblock/boxBlockFour'
 export default {
 	components:{
 		//标题

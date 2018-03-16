@@ -1,5 +1,7 @@
 import rxios from './rxios'
 
+const apiPrefix = 'http://apirest.richfly.cn';
+
 const index = () => rxios('GET', '/hs/v3/channel/418');
 const pull = (start, count) => rxios('GET', '/rock/book/recommend', { start, count });
 const searchpage = () => rxios('GET', '/api/searchpage');
@@ -18,12 +20,15 @@ const persistent = (start, count, type) => rxios('GET', '/store/v0/ad/persistent
 const detail = (id) => rxios('GET', '/hs/v0/android/fiction/book/' + id);
 const read = (id, chapter) => rxios('GET', '/book/read', { id, chapter });
 const chapterCatalogue = (id) => rxios('GET', `/store/v0/fiction/detail/${id}?chapter_id=0`);
-// 免费请求天假
-// const freeChapter = (id) => rxios('GET', '/api/chapter/' + id);
-// const freeRead = (id) => rxios('GET', '/api/read/' + id);
-// const freeSearch = (name) => rxios('POST', '/api/freeSearch', { name })
-const freeSearch = (name,author,id) => rxios('GET', '/api/freeBookSearch', { name,author,id });
-const fetchFreeBook = id => rxios('GET',`/api/fetchFreeBook`,{id3});
+const freeSearch = (name,author,id) => {
+    // console.log(name,author,id);
+    return rxios('GET', `/free/book/${id}?name=${name}&author=${author}`);
+}
+const freeRead = (id,chapter) => {
+    console.log(id,chapter);
+    return rxios('GET', `/free/read?id=${id[1]}&nid=${id[0]}&chapter=${chapter}`)
+};
+const fetchFreeBook = id => rxios('GET',`/api/fetchFreeBook`,{id});
 export {
     index, // 首页
     pull, //首页瀑布流请求

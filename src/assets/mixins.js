@@ -39,4 +39,4 @@ const loading = {
 
 
 
-export { translate, change, loading };
+export { change, loading };

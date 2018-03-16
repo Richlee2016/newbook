@@ -11,11 +11,24 @@ export default {
         sessionArr('set', 'readnow', { id:state.read.id, chapter: state.read.chapter});
     },
     // scroll增加chapter
-    BOOK_ADD:(state) =>{
-        if(state.read.addOnOff){
-            state.read.chapter++;
+    BOOK_ADD:(state,{free}) =>{
+        const {chapter} = state.free; 
+        const readNow = state.read.chapter;
+        let n;
+        chapter.forEach((o,i) => {
+            if(o.href == readNow){
+                n = i;
+            };
+        })
+        if(free){
+            if(state.read.addOnOff){
+                state.read.chapter =chapter[n+1].href;
+            };
+        }else{
+            if(state.read.addOnOff){
+                state.read.chapter++;
+            };
         };
-        console.log(state.read);
     },
     // 进入阅读
     BOOK_START:(state,{id,chapter,fn}) =>{

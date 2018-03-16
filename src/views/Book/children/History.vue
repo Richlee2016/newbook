@@ -114,18 +114,6 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less'>
-.chapter-btn {
-  a {
-    color: white;
-  }
-}
-.banner {
-  height: 400px;
-  display: flex;
-  // flex-direction: column;
-  li {
-    flex: 1;
-    height: 100%;
-  }
-}
+
+
 </style>

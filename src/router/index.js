@@ -9,7 +9,7 @@ Router.prototype.goback = function() {
     this.go(-1);
 };
 Vue.use(Router)
-
+// import Index from "@/views/Index/Index"
 const Index = r => require.ensure([], () => r(require('@/views/Index/Index')), 'index');
 const Search = r => require.ensure([], () => r(require('@/views/Search/Search')), 'search');
 const Banner = r => require.ensure([], () => r(require('@/views/Banner/Banner')), 'banner');

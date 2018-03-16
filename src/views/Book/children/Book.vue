@@ -9,6 +9,7 @@
         </section>
         </div>
         <v-reader @menuHandle="menuHandle" :fontSize ="fontSize" :bd="bd"></v-reader>
+        <!-- <v-free-reader @menuHandle="menuHandle" :fontSize ="fontSize" :bd="bd" v-else></v-free-reader> -->
         <div v-show="showStyle" class="fontChoice">
             <div class="fontbox01">
             <label>字号</label>
@@ -25,10 +26,10 @@
         <ul class="book-bottom" v-show="showMenu">
             <li>
                 <div class="chapter-btn">
-                <router-link :to="{path:'/chapter/'+$route.params.id}">
+                <a @click="goChapter">
                     <span class="icon-rmenu1"></span>
                     <p>目录</p>
-                </router-link>
+                </a>
                 </div>
             </li>
             <li>
@@ -56,6 +57,8 @@
 <script>
 
 import Reader from "../component/reader.vue";
+import FreeReader from "../component/freeReader.vue";
+import {mapState } from "vuex";
 export default {
   data() {
     return {
@@ -92,7 +95,13 @@ export default {
     }
   },
   components: {
-    "v-reader": Reader
+    "v-reader": Reader,
+    "v-free-reader":FreeReader
+  },
+  computed:{
+    ...mapState({
+      free: "free"
+    })
   },
   methods: {
     menuHandle(type) {
@@ -100,6 +109,16 @@ export default {
       if(!this.showMenu){
         this.showStyle = false;
       };
+    },
+    goChapter() {
+      if (this.free.id) {
+        this.$router.push({
+          path: `/detail/${this.$route.params.id}/chapter`,
+          query: { free: 1 }
+        });
+      } else {
+        this.$router.push({ path: `/detail/${this.$route.params.id}/chapter` });
+      }
     }
   },
   mounted() {
@@ -115,13 +134,5 @@ export default {
     color: white;
   }
 }
-.banner {
-  height: 400px;
-  display: flex;
-  // flex-direction: column;
-  li {
-    flex: 1;
-    height: 100%;
-  }
-}
+
 </style>

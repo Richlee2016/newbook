@@ -1,5 +1,5 @@
 <template>
-  	<div class="upGif" v-show="out">
+  	<div class="upGif" v-show="out" :class="{background:gifbd}">
 		<div v-show="load">
 			<div class="svg">
 				<svg version="1.1" id="Layer_1" xmlns="http://www.w3.org/2000/svg" xmlns:xlink="http://www.w3.org/1999/xlink" x="0px" y="0px"
@@ -33,9 +33,15 @@ export default {
     return {
       text: "没有更多⊙﹏⊙‖∣°",
       load: true,
-      out: true
+			out: true
     };
-  }
+	},
+	props:{
+		gifbd:{
+			type:String,
+			default:'white'
+		}
+	}
 };
 </script>
 
@@ -45,7 +51,7 @@ export default {
   // transform: translateY(30px);
   height: 40px;
   width: 100%;
-  background: #efeff0;
+  // background: white;
   text-align: center;
   span {
 	color: #666;

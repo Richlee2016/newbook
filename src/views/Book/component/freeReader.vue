@@ -1,32 +1,22 @@
 <template>
     <div class="reader-box" ref='readerBox' @click="pagego">
       <div class="read-container" :class="bd" v-scroll>
-        <div class="read-main" v-if="!$route.query.free">
-          <div v-for="item in readList" :key="item.t" >
-            <h4>{{item.t}}</h4>
+        <div class="read-main">
+          <div>
+            12
+            <!-- <h4>{{item.t}}</h4>
             <ul class="book-body">
               <li v-for="(text,index) in item.p" :key="index" :style="{fontSize:fontSize + 'px',lineHeight:fontSize + 20 + 'px'}">{{text}}</li>
-            </ul>
+            </ul> -->
           </div>
           <r-upgif ref="upGif" :gifbd="'none'"></r-upgif>
         </div>
-        <div class="read-main" v-else>
-          <div v-for="(book,n) in readList" :key="n" >
-            <h4>{{book.title}}</h4>
-            <ul class="book-body">
-              <li :style="{fontSize:fontSize + 'px',lineHeight:fontSize + 20 + 'px'}" v-html="textDecode().decode(book.text)"></li>
-            </ul>
-          </div>
-          <r-upgif ref="upGif" :gifbd="'none'"></r-upgif>
-        </div>
-        
       </div>
     </div>
 </template>
 
 <script>
 import { mapActions, mapState } from "vuex";
-import he from "he";
 import bookHead from "@/components/common/bookHead";
 export default {
   components: {
@@ -52,28 +42,14 @@ export default {
     }
   },
   computed: {
-    ...mapState(["read", "book"]),
+    ...mapState(["freeRead"]),
     readList() {
-      // console.log(this.read);
-      const { free } = this.$route.query;
-      if (free) {
-        return this.read.text.map(o => {
-          return {
-            text: o.text[0],
-            title: o.title
-          };
-        });
-      } else {
-        return this.read.text.map(o => JSON.parse(o.txt));
-      }
+      return 0;
     }
   },
   methods: {
-    ...mapActions(["bookRead", "bookFree"]),
+    ...mapActions(["bookRead"]),
     // 返回点击位置
-    textDecode() {
-      return he;
-    },
     _part(hei, c) {
       const part = hei / 3;
       if (c > 0 && c <= part) {
@@ -108,12 +84,10 @@ export default {
     },
     RS_upload(down, over) {
       const self = this;
-      const { free } = self.$route.query;
       this.bookRead({
-        fn: () => {
+        fn() {
           down();
-        },
-        free: self.$route.query.free
+        }
       });
     },
     menuout() {
@@ -121,17 +95,16 @@ export default {
       const part = this._part(wrapperHeight, pointY);
     }
   },
-  mounted() {
-    if(this.$route.query.free){
-      const { author, name, id } = this.book;
-      this.bookFree({ name, author, id });
-    };
-  }
+  mounted() {}
 };
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less'>
+.test {
+  height: 500px;
+  width: 100%;
+}
 .read-container {
   height: 100vh;
   // background: #e9dfc7;

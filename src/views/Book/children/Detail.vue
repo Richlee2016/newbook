@@ -17,7 +17,7 @@
                     </div>
                     <div class="detail-btn">
                         <div class="start-read">
-                            <button @click="startRead" :disabled="haveFreeChapter.active?true:false" :class="!haveFreeChapter.active? 'orange': 'black' ">{{isRead === 0?`书币阅读`:`书币阅读第${isRead}章`}}</button>
+                            <button @click="startRead" :disabled="haveFreeChapter.active?true:false" :class="!haveFreeChapter.active? 'orange': 'black' ">{{!isFree?`书币阅读`:`请免费食用`}}</button>
                         </div>
                         <div class="download">
                               <button @click="startFreeRead" :disabled="haveFreeChapter.active?false:true"  :class="haveFreeChapter.active? 'orange': 'black' ">{{haveFreeChapter.msg}}</button>
@@ -86,20 +86,40 @@ export default {
       free: "free"
     }),
     haveFreeChapter() {
+
       if (this.free.loading) {
         return { active: false, msg: "免费获取中..." };
-      }
-      if (!this.free.loading && this.free.id) {
-        return { active: true, msg: "免费阅读" };
-      }
-      if (!this.free.loading && !this.free.id) {
-        return { active: false, msg: "无免费资源" };
+      }else{
+        const book = this.detail;
+        const free = this.free;
+        if(book.name === free.name&&book.author === free.author){
+          return { active: true, msg: "免费阅读" };
+        }else{
+          return { active: false, msg: "无免费资源" };
+        };
       }
     },
     // 是否历史阅读
     isRead() {
-      const read = this.historyRead.find(o => o.id === this.$route.params.id);
-      return read ? read.chapter : 0;
+      // const read = this.historyRead.find(o => o.id === this.$route.params.id);
+      // return read ? read.chapter : this.isFree ? this.free.chapter[0].href : 0;
+      const old = this.historyRead[this.historyRead.length - 1];
+      let read;
+      if(!old){
+        return this.isFree ? this.free.chapter[0].href : 0;
+      };
+      if(this.isFree){
+        console.log(1);
+        const myFree = this.free.id.join();
+        if(Array.isArray(old.id)){
+          read = myFree === old.id.join()?true : false;
+        }
+      }else{
+        if(!Array.isArray(old.id)){
+          read = this.historyRead.find(o => o.id === this.$route.params.id)?true:false;
+        }
+      }
+      return read ? old.chapter : this.isFree ? this.free.chapter[0].href : 0;
     },
     // 详情数据
     container() {
@@ -139,19 +159,27 @@ export default {
     },
     // 开始阅读
     startRead() {
+      this.isFree = false;
       this.$store.commit("BOOK_START", {
         id: this.$route.params.id,
         chapter: this.isRead,
         fn: () => {
-          this.$router.push({ path: `/detail/${this.$route.params.id}/book`});
+          this.$router.push({ path: `/detail/${this.$route.params.id}/book` });
         }
       });
     },
     //免费书目加载
     startFreeRead() {
-      this.$router.push({
-        path: `/detail/${this.$route.params.id}/book`,
-        query: { free: 1 }
+      this.isFree = true;
+      this.$store.commit("BOOK_START", {
+        id: this.free.id,
+        chapter: this.isRead,
+        fn: () => {
+          this.$router.push({
+            path: `/detail/${this.$route.params.id}/book`,
+            query: { free: 1 }
+          });
+        }
       });
     },
     //目录
@@ -169,6 +197,7 @@ export default {
   // 监听路由变化
   watch: {
     $route(to, from) {
+      this.isFree = false;
       const id = this.$route.params.id;
       if (id && id.length < 7 && id.length >= 5) {
         this.getData({

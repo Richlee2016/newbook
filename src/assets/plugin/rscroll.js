@@ -31,7 +31,7 @@ document.addEventListener(
 import downGif from "./components/upGif";
 import banner from "./components/banner";
 import Slide from "./Rscroll/slide"
-import MyScroll from "./Rscroll/Scroll"
+import MyScroll from "./Rscroll/scroll"
 
 export default {
   install(Vue) {

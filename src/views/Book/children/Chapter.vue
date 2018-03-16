@@ -42,7 +42,7 @@ export default {
     }
   },
   computed: {
-    ...mapState(["free"]),
+    ...mapState(["free","book"]),
     freeChapterBox() {
       const { free } = this.$route.query;
       if (Number(free) === 1) {
@@ -54,7 +54,7 @@ export default {
   },
   methods: {
       ...mapActions([
-          'fetchFreeBook'
+          'bookFree'
       ]),
     _getChapterCatalogue() {
       chapterCatalogue(this.$route.params.id).then(res => {
@@ -86,20 +86,29 @@ export default {
       }
     },
     readFree(item) {
-      console.log(item.href);
+      this.$store.commit("BOOK_START", {
+        id: this.free.id,
+        chapter: item.href,
+        fn: () => {
+          this.$router.push({
+            path: `/detail/${this.$route.params.id}/book`,
+            query: { free: 1 }
+          });
+        }
+      });
     }
   },
   created() {
     this.$overLoad();
     if (this.$route.query.free) {
-      this.fetchFreeBook(this.$route.params.id);
+      const { author, name, id } = this.book;
+      this.bookFree({ name, author, id });
     } else {
       this._getChapterCatalogue();
     }
   }
 };
 </script>
-
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang='less'>
 .chapter-box {
